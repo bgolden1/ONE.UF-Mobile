@@ -8,15 +8,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, StyleSheet } from 'react-native';
 
+import {View} from '../components/Themed';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import TabThreeScreen from '../screens/TabThreeScreen';
+import Calendar from '../screens/Calendar';
+import Finances from '../screens/Finances';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -62,13 +63,18 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveBackgroundColor: '#285697',
+        tabBarInactiveBackgroundColor: '#285697',
+        headerBackgroundContainerStyle: {backgroundColor: '#285697'},
+        headerTransparent: true,
+        headerTitleStyle: {fontSize: 36}
       }}>
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Calendar"
+        component={Calendar}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="code" color={color} />,
+          title: 'Calendar',
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -76,29 +82,15 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={color} />
         })}
       />
       <BottomTab.Screen
-        name="TabThree"
-        component={TabThreeScreen}
+        name="Finances"
+        component={Finances}
         options={{
-          title: 'Tab Three',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="code" color={color} />,
+          title: 'Finances',
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="money" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -114,3 +106,9 @@ function TabBarIcon(props: {
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+  header: {
+    color: '#285697',
+  },
+});
