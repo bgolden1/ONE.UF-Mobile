@@ -1,25 +1,31 @@
-import InAppBrowser from 'react-native-inappbrowser-reborn';
+import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Button, Alert, Platform, Text} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import { View } from './Themed';
 import * as Linking from 'expo-linking';
+import WebView from 'react-native-webview';
 
 export default class LoginComponent extends React.Component {
         state = {
           redirectData: null,
         };
+
+        
       
         render() {
+          const useProxy = true;
+          const returnUrl = AuthSession.makeRedirectUri({useProxy});
           return (
-            <View>
-              <Button
-                onPress={this._openAuthSessionAsync}
-                title="Login"
-              />
-              {this._maybeRenderRedirectData()}
-            </View>
+            <WebView
+              source={{
+                uri: 'https://login.ufl.edu/idp/profile/SAML2/Redirect/SSO?execution=e1s1',
+                headers: {
+                  'Referer': {returnUrl},
+                },
+              }}
+            />
           );
         }
       
@@ -34,7 +40,22 @@ export default class LoginComponent extends React.Component {
       
           this.setState({ redirectData: data });
         };
-      
+        
+        _openAuthSessionAsync = async () => {
+          const useProxy = true;
+          const returnUrl = AuthSession.makeRedirectUri({useProxy});
+          return (
+            <WebView
+              source={{
+                uri: 'https://login.ufl.edu/idp/profile/SAML2/Redirect/SSO?execution=e1s1',
+                headers: {
+                  'Referer': {returnUrl},
+                },
+              }}
+            />
+          );
+        }
+      /*
         // openAuthSessionAsync doesn't require that you add Linking listeners, it
         // returns the redirect URL in the resulting Promise
         _openAuthSessionAsync = async () => {
@@ -53,6 +74,7 @@ export default class LoginComponent extends React.Component {
             console.log(error);
           }
         };
+        */
       
         _addLinkingListener = () => {
           Linking.addEventListener("url", this._handleRedirect);
@@ -73,4 +95,5 @@ export default class LoginComponent extends React.Component {
             </Text>
           );
         };
+        
       }
