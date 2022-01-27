@@ -20,7 +20,7 @@ const linking: LinkingOptions<RootStackParamList> = {
               TabOneScreen: 'one',
             },
           },
-          Calendar: {
+          Schedule: {
             screens: {
               TabTwoScreen: 'two',
             },
