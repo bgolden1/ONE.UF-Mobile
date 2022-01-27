@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 
-export default function Calendar() {
+export default function Schedule() {
   return (
     <View style={styles.container}>
     </View>

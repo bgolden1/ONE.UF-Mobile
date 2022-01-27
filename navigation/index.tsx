@@ -8,14 +8,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable, StyleSheet } from 'react-native';
+import { ColorSchemeName, StyleSheet } from 'react-native';
 
-import {View} from '../components/Themed';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
-import Calendar from '../screens/Calendar';
+import Schedule from '../screens/Schedule';
 import Finances from '../screens/Finances';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -66,10 +65,10 @@ function BottomTabNavigator() {
         headerTitleStyle: {fontSize: 36}
       }}>
       <BottomTab.Screen
-        name="Calendar"
-        component={Calendar}
+        name="Schedule"
+        component={Schedule}
         options={{
-          title: 'Calendar',
+          title: 'Schedule',
           tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={color} />,
         }}
       />
