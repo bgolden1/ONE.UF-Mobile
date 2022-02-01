@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { Text, View } from '../components/Themed';
 import DropDown from '../components/DropDown';
+import { Courses } from '../components/Course';
 
 export default function Schedule() {
   const [isLoading, setLoading] = useState(true);
@@ -46,6 +47,7 @@ export default function Schedule() {
       setSearching(false);
     }).catch((error) => {
       console.log(error);
+      
     });
   }
 
@@ -80,6 +82,7 @@ export default function Schedule() {
             </View> :
             <View style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
               <View style={styles.container}>
+                <Courses courses={results['COURSES']}/>
                 <Button title="Return to Search" onPress={returnToSearch} />
               </View>
             </View>
