@@ -47,7 +47,7 @@ export default function Schedule() {
       setSearching(false);
     }).catch((error) => {
       console.log(error);
-      
+
     });
   }
 
@@ -80,10 +80,10 @@ export default function Schedule() {
               </View>
               <Button title='Search' onPress={search} />
             </View> :
-            <View style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
-              <View style={styles.container}>
-                <Courses courses={results['COURSES']}/>
-                <Button title="Return to Search" onPress={returnToSearch} />
+            <View style={styles.container}>
+              <Courses courses={results['COURSES']} />
+              <View style={{position: 'absolute',left: '0%', top: '10%'}}>
+              <Button title="<Return to Search" onPress={returnToSearch}/>
               </View>
             </View>
           }

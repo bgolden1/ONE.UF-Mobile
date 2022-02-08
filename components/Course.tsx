@@ -1,41 +1,40 @@
 import { Text, useThemeColor, View } from '../components/Themed';
-import { StyleSheet, FlatList, Button } from 'react-native';
-
-
-export function Course(course: any) {
-    return (
-        <View style={styles.container}>
-            <Text>Code: {course.code}, Name: {course.name}</Text>
-            <Text>Description: {course.description}</Text>
-        </View>
-    );
-} 
+import { StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 
 export function Courses(props: any) {
     const courses = props['courses']
     return (
-        <View style={styles.container}>
-            {courses.map((course: any, id: any) => {
-                <Course course={course}/>
+        <ScrollView style={{ flexDirection: "column", paddingBottom: 0, paddingTop: 100 }}>
+            {courses.map((course: any, key: any) => {
+                return (
+                    <TouchableOpacity>
+                    <View key={key} style={styles.course}>
+                        <Text>Code: {course.code}</Text>
+                        <Text>Name: {course.name}</Text>
+                        <Text>
+                            Description:{'\n\t'}{course.description}
+                        </Text>
+                    </View>
+                    </TouchableOpacity>);
             })}
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      height: 120
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-      fontSize: 15,
-      fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
-    separator: {
-      marginVertical: 30,
-      height: 1,
-      width: '80%',
+    course: {
+        alignSelf: 'flex-start',
+        width: '100%',
+        borderColor: '#285697',
+        borderWidth: 2,
     },
-  });
+});
