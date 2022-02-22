@@ -41,7 +41,7 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="Transcript" component={Transcript}/>
+      <Stack.Screen name="Transcript" component={Transcript} options={{title: 'Unofficial Transcript', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
   );
 }
