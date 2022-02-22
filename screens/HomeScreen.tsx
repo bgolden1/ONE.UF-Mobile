@@ -6,11 +6,34 @@ import { RootTabScreenProps } from '../types';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => {navigation.jumpTo('Schedule')}} style={styles.container}>
-        <View style={{backgroundColor: 'blue', flex: 1}}>
-          <Text>Press here</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={{
+        top: 0,
+        backgroundColor: '#d18c8c',
+        width: "95%",
+        height: "20%",
+        borderColor: '#FF3D00',
+        borderWidth: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15,
+        borderRadius: 15
+      }}>
+        <Text style={styles.title}>Holds</Text>
+      </View>
+      <View style={{
+        top: 0,
+        backgroundColor: '#ced4f2',
+        width: "95%",
+        height: "20%",
+        borderColor: '#003Dff',
+        borderWidth: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15,
+        borderRadius: 15
+      }}>
+        <Text style={styles.title}>Unofficial Transcript</Text>
+      </View>
     </View>
   );
 }
@@ -18,8 +41,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
