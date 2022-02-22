@@ -7,9 +7,34 @@ import { RootTabScreenProps } from '../types';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to ONE.UF</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.body}>Here you will find all the functionality you like and maybe someday it'll even be complete</Text>
+      <View style={{
+        top: 0,
+        backgroundColor: '#d18c8c',
+        width: "95%",
+        height: "20%",
+        borderColor: '#FF3D00',
+        borderWidth: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15,
+        borderRadius: 15
+      }}>
+        <Text style={styles.title}>Holds</Text>
+      </View>
+      <View style={{
+        top: 0,
+        backgroundColor: '#ced4f2',
+        width: "95%",
+        height: "20%",
+        borderColor: '#003Dff',
+        borderWidth: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15,
+        borderRadius: 15
+      }}>
+        <Text style={styles.title}>Unofficial Transcript</Text>
+      </View>
     </View>
   );
 }
@@ -17,8 +42,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
