@@ -20,11 +20,16 @@ const linking: LinkingOptions<RootStackParamList> = {
               TabOneScreen: 'one',
             },
           },
-          TabTwo: {
+          Schedule: {
             screens: {
               TabTwoScreen: 'two',
             },
           },
+          Finances: {
+            screens: {
+              TabThreeScreen: 'three'
+            }
+          }
         },
       },
       Modal: 'modal',
