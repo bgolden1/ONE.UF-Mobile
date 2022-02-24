@@ -11,7 +11,7 @@ export default function DropDown(props: any) {
     return (
     <Picker selectedValue={selectedValue} onValueChange={(itemValue, itemIndex) =>
             setSelectedValue(itemValue)
-        } style={{ height: 50, width: 400}} itemStyle={[{height:100, fontSize: 15}, {color}]}>
+        } style={{ height: 50, width: 300}} itemStyle={[{height:100, fontSize: 14}, {color}]}>
             {items.map((item: any) => {
                 return <Picker.Item label={item["DESC"]} value={item["CODE"]}/>
             })}

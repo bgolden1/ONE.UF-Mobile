@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, Button, ActivityIndicator} from 'react-native';
+import { StyleSheet, ScrollView, Button, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -9,10 +9,10 @@ import { Courses } from '../components/Course';
 export default function Schedule() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({
-    'categories': [],
-    'departments': [],
-    'progLevels': [],
-    'terms': []
+    'categories': [''],
+    'departments': [''],
+    'progLevels': [''],
+    'terms': ['']
   });
   const [category, setCategory] = useState([]);
   const [department, setDepartment] = useState([]);
@@ -25,6 +25,7 @@ export default function Schedule() {
     "RETRIEVEDROWS": 0,
     "TOTALROWS": 0,
   })
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     axios.get("https://one.uf.edu/apix/soc/filters").then((res) => {
@@ -48,6 +49,8 @@ export default function Schedule() {
       setSearching(false);
       setLoading(false);
     }).catch((error) => {
+      setFailed(true);
+      setLoading(false);
       console.log(error);
 
     });
@@ -55,42 +58,47 @@ export default function Schedule() {
 
   function returnToSearch() {
     setSearching(true);
+    setFailed(false);
   }
   return (
     <View style={styles.container}>
-      {isLoading ? <View style={{alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'}/></View> :
-        <View style={styles.container}>
-          {isSearching ?
-            <ScrollView style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
-              <View style={styles.container}>
-                <Text style={styles.title}>Categories:</Text>
-                <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} />
-              </View>
-              <View style={styles.container}>
-                <Text style={styles.title}>Departments:</Text>
-                <DropDown selectedValue={department} setSelectedValue={setDepartment} items={data['departments']} />
-              </View>
+      {failed ? <View style={{ position: 'absolute', left: '0%', top: '10%' }}>
+        <Button title="<Return to Search" onPress={returnToSearch} />
+        <Text style={[styles.title, {alignSelf: 'center' }]}>No results found</Text>
+      </View> :
+        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+          <View style={styles.container}>
+            {isSearching ?
+              <ScrollView style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
+                <View style={styles.container}>
+                  <Text style={styles.title}>Terms:</Text>
+                  <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.title}>Categories:</Text>
+                  <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} />
+                </View>
 
+                <View style={styles.container}>
+                  <Text style={styles.title}>Program Levels:</Text>
+                  <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={['', ...data['progLevels']]} />
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.title}>Departments:</Text>
+                  <DropDown selectedValue={department} setSelectedValue={setDepartment} items={['', ...data['departments']]} />
+                </View>
 
+                <Button title='Search' onPress={search} />
+
+              </ScrollView> :
               <View style={styles.container}>
-                <Text style={styles.title}>Program Levels:</Text>
-                <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={data['progLevels']} />
+                <Courses courses={results['COURSES']} />
+                <View style={{ position: 'absolute', left: '0%', top: '10%' }}>
+                  <Button title="<Return to Search" onPress={returnToSearch} />
+                </View>
               </View>
-              <View style={styles.container}>
-                <Text style={styles.title}>Terms:</Text>
-                <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
-              </View>
-              <Button title='Search' onPress={search} />
-              
-            </ScrollView> :
-            <View style={styles.container}>
-              <Courses courses={results['COURSES']} />
-              <View style={{position: 'absolute',left: '0%', top: '10%'}}>
-              <Button title="<Return to Search" onPress={returnToSearch}/>
-              </View>
-            </View>
-          }
-        </View>
+            }
+          </View>
 
       }
     </View>
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: 120
+    height: 120,
   },
   title: {
     fontSize: 15,
