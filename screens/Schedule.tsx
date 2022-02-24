@@ -80,9 +80,6 @@ export default function Schedule() {
                 <Text style={styles.title}>Terms:</Text>
                 <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
               </View>
-              <View style={styles.container}>
-                
-              </View>
               <Button title='Search' onPress={search} />
               
             </ScrollView> :
