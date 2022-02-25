@@ -29,14 +29,35 @@ function Course(props: any) {
             <View key={key} style={styles.course}>
                 <Text style={styles.title}>{course.code}: {course.name}</Text>
                 <Text style={styles.body}>{course.description}</Text>
-                {course.prerequisites != '' && 
-                <Text style={styles.body}>{"\n"}{course.prerequisites}</Text>}
+                {course.prerequisites != '' &&
+                    <Text style={styles.body}>{"\n"}{course.prerequisites}</Text>}
                 {isPressed &&
-                    course.sections.map((section: any, newKey: any) => {
+                    course.sections.map((section: any, key1: any) => {
                         return (
-                        <View style={styles.section} key={newKey}>
-                            <Text style={styles.title}> Class # {section.classNumber}</Text>
-                        </View>
+                            <View style={styles.section} key={key1}>
+                                <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: "100%" }}>
+                                    <Text style={styles.title}> Class # {section.classNumber} </Text>
+                                    <Text style={styles.body}> Credits: {section.credits}</Text>
+                                </View>
+                                <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: "100%" }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                                            <Text style={styles.body}>Instructor(s): </Text>
+                                            {section.instructors.map((instructor: any, key2: any) => {
+                                                return (
+                                                    <Text key={key2} style={styles.body}>{instructor.name}</Text>
+                                                );
+                                            })}
+                                        </View>
+                                    <View>
+                                        <Text style={styles.body}>Meet time(s):</Text>
+                                        {section.meetTimes.map((meetTime: any, key3: any) => {
+                                            return(
+                                                <Text style={styles.body} key={key3}>{meetTime.meetDays.join('/')}: {meetTime.meetTimeBegin} - {meetTime.meetTimeEnd}</Text>
+                                            );
+                                        })}
+                                    </View>
+                                </View>
+                            </View>
                         );
                     })
                 }
@@ -59,8 +80,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     course: {
-        alignSelf: 'flex-start',
-        width: '95%',
+        alignSelf: 'center',
+        width: 350,
         borderColor: '#285697',
         borderWidth: 2,
         borderRadius: 15,
@@ -69,7 +90,7 @@ const styles = StyleSheet.create({
     },
     section: {
         alignSelf: 'flex-start',
-        width: '95%',
+        width: '90%',
         borderColor: 'grey',
         borderWidth: 2,
         borderRadius: 15,
@@ -83,7 +104,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingBottom: 300,
         paddingTop: 100
     }
 });
