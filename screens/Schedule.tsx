@@ -31,6 +31,10 @@ export default function Schedule() {
   const [title, setTitle] = useState('');
   const [code, setCode] = useState('');
   const [instructor, setInstructor] = useState('');
+  const [isTermsOpen, setTOpen] = useState(false);
+  const [isCatOpen, setCOpen] = useState(false);
+  const [isProgOpen, setPOpen] = useState(false);
+  const [isDepOpen, setDOpen] = useState(false);
 
   useEffect(() => {
     axios.get("https://one.uf.edu/apix/soc/filters").then((res) => {
@@ -75,22 +79,22 @@ export default function Schedule() {
           <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             {isSearching ?
               <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
-                <View style={[styles.container, {height: 120}]}>
+                <View style={[styles.container, {height: 120, marginBottom: isTermsOpen ? 200 : 0}]}>
                   <Text style={styles.title}>Terms:</Text>
-                  <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
+                  <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} open={isTermsOpen} setOpen={setTOpen} zIndex={1000}/>
                 </View>
-                <View style={[styles.container, {height: 120}]}>
+                <View style={[styles.container, {height: 120, marginBottom: isCatOpen ? 200 : 0}]}>
                   <Text style={styles.title}>Categories:</Text>
-                  <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} />
+                  <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} open={isCatOpen} setOpen={setCOpen}zIndex={2000}/>
                 </View>
 
-                <View style={[styles.container, {height: 120}]}>
+                <View style={[styles.container, {height: 120, marginBottom: isProgOpen ? 200 : 0}]}>
                   <Text style={styles.title}>Program Levels:</Text>
-                  <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={['', ...data['progLevels']]} />
+                  <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={['', ...data['progLevels']]} open={isProgOpen} setOpen={setPOpen} zIndex={3000}/>
                 </View>
-                <View style={[styles.container, {height: 120}]}>
+                <View style={[styles.container, {height: 120, marginBottom: isDepOpen ? 200 : 0}]}>
                   <Text style={styles.title}>Departments:</Text>
-                  <DropDown selectedValue={department} setSelectedValue={setDepartment} items={['', ...data['departments']]} />
+                  <DropDown selectedValue={department} setSelectedValue={setDepartment} items={['', ...data['departments']]} open={isDepOpen} setOpen={setDOpen} zIndex={4000}/>
                 </View>
                 <View style={[styles.container, {padding: '5%'}]}>
                   <Text style={styles.title}>Course Title:</Text>
