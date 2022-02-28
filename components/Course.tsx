@@ -39,19 +39,21 @@ function Course(props: any) {
                                     <Text style={styles.title}> Class # {section.classNumber} </Text>
                                     <Text style={styles.body}> Credits: {section.credits}</Text>
                                 </View>
-                                <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: "100%" }}>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-                                            <Text style={styles.body}>Instructor(s): </Text>
-                                            {section.instructors.map((instructor: any, key2: any) => {
-                                                return (
-                                                    <Text key={key2} style={styles.body}>{instructor.name}</Text>
-                                                );
-                                            })}
-                                        </View>
-                                    <View>
+                                <Text />
+                                <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center', width: "100%" }}>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={styles.body}>Instructor(s): </Text>
+                                        {section.instructors.map((instructor: any, key2: any) => {
+                                            return (
+                                                <Text key={key2} style={styles.body}>{instructor.name}</Text>
+                                            );
+                                        })}
+                                    </View>
+                                    <Text/>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.body}>Meet time(s):</Text>
                                         {section.meetTimes.map((meetTime: any, key3: any) => {
-                                            return(
+                                            return (
                                                 <Text style={styles.body} key={key3}>{meetTime.meetDays.join('/')}: {meetTime.meetTimeBegin} - {meetTime.meetTimeEnd}</Text>
                                             );
                                         })}
@@ -104,6 +106,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingTop: 100
+        paddingTop: '30%'
     }
 });

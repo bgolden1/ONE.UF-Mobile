@@ -1,12 +1,14 @@
-import { StyleSheet, ScrollView, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, Button, ActivityIndicator, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, useThemeColor} from '../components/Themed';
 import DropDown from '../components/DropDown';
 import { Courses } from '../components/Course';
 
 export default function Schedule() {
+  const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
+
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({
     'categories': [''],
@@ -26,6 +28,9 @@ export default function Schedule() {
     "TOTALROWS": 0,
   })
   const [failed, setFailed] = useState(false)
+  const [title, setTitle] = useState('');
+  const [code, setCode] = useState('');
+  const [instructor, setInstructor] = useState('');
 
   useEffect(() => {
     axios.get("https://one.uf.edu/apix/soc/filters").then((res) => {
@@ -39,8 +44,8 @@ export default function Schedule() {
 
   function search() {
     var url = "https://one.uf.edu/apix/soc/schedule?"
-    url = url + "ai=false&auf=false&category=" + category + "&class-num=&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&dept=" + department;
-    url = url + "&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=&level-min=&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=" + progLevel;
+    url = url + "ai=false&auf=false&category=" + category + "&class-num=&course-code=" + code + "&course-title=" + title + "&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&dept=" + department;
+    url = url + "&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=" + instructor + "&last-control-number=0&level-max=&level-min=&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=" + progLevel;
     url = url + "&qst-1=&qst-2=&qst-3=&quest=false&term=" + term + "&wr-2000=&wr-4000=&wr-6000=&writing=false&var-cred=&hons=false";
     setLoading(true);
     axios.get(url).then((res) => {
@@ -62,32 +67,43 @@ export default function Schedule() {
   }
   return (
     <View style={styles.container}>
-      {failed ? <View style={{ position: 'absolute', left: '0%', top: '10%' }}>
+      {failed ? <View style={{ position: 'absolute', left: 0, top: '10%' }}>
         <Button title="<Return to Search" onPress={returnToSearch} />
-        <Text style={[styles.title, {alignSelf: 'center' }]}>No results found</Text>
+        <Text style={[styles.title, { alignSelf: 'center' }]}>No results found</Text>
       </View> :
         isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
-          <View style={styles.container}>
+          <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             {isSearching ?
-              <ScrollView style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
-                <View style={styles.container}>
+              <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
+                <View style={[styles.container, {height: 120}]}>
                   <Text style={styles.title}>Terms:</Text>
                   <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
                 </View>
-                <View style={styles.container}>
+                <View style={[styles.container, {height: 120}]}>
                   <Text style={styles.title}>Categories:</Text>
                   <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} />
                 </View>
 
-                <View style={styles.container}>
+                <View style={[styles.container, {height: 120}]}>
                   <Text style={styles.title}>Program Levels:</Text>
                   <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={['', ...data['progLevels']]} />
                 </View>
-                <View style={styles.container}>
+                <View style={[styles.container, {height: 120}]}>
                   <Text style={styles.title}>Departments:</Text>
                   <DropDown selectedValue={department} setSelectedValue={setDepartment} items={['', ...data['departments']]} />
                 </View>
-
+                <View style={[styles.container, {padding: '5%'}]}>
+                  <Text style={styles.title}>Course Title:</Text>
+                  <TextInput style={[styles.input, {color}]} onChangeText={setTitle} value={title} />
+                </View>
+                <View style={[styles.container, {padding: '5%'}]}>
+                  <Text style={styles.title}>Course Code:</Text>
+                  <TextInput style={[styles.input, {color}]} onChangeText={setCode} value={code} />
+                </View>
+                <View style={[styles.container, {padding: '5%'}]}>
+                  <Text style={styles.title}>Instructor Last Name:</Text>
+                  <TextInput style={[styles.input, {color}]} onChangeText={setInstructor} value={instructor} />
+                </View>
                 <Button title='Search' onPress={search} />
 
               </ScrollView> :
@@ -98,7 +114,7 @@ export default function Schedule() {
                 </View>
               </View>
             }
-          </View>
+          </KeyboardAvoidingView>
 
       }
     </View>
@@ -109,10 +125,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    height: 120,
+    justifyContent: 'center',
   },
   title: {
+    textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
   },
@@ -121,4 +137,19 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    padding: 10,
+    minWidth: '90%'
+  },
+  scrollView: {
+    alignSelf: 'center',
+    alignContent: 'center',
+  },
+  contentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 80
+  }
 });
