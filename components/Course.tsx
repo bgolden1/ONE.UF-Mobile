@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     section: {
-        alignSelf: 'flex-start',
+        alignSelf: 'center',
         width: '90%',
         borderColor: 'grey',
         borderWidth: 2,
