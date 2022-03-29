@@ -7,218 +7,165 @@ import { RootTabScreenProps } from '../types';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as WebBrowser from 'expo-web-browser';
 
 export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
-    
-    
-
-
-
-
-
-    const [transcript, setTranscript] = useState({
-        personalInfo: {
-            name: "",
-            ufid: 0,
-            residency: "",
-            residencyDescription: "",
-            basisOfAdmissionCode: "",
-            basisOfAdmissionDescription: "",
-            ssn: "",
-            dob: ""
-        },
-        records: {
-            undergraduate: {
-                comments: {
-                    before: {
-                        2: {
-                            1: ""
-                        },
-                        3: {
-                            1: ""
-                        }
-                    }
-                },
-                ufGpa: "",
-                totalHoursEarned: "",
-                gradePointsEarned: "",
-                ufHoursEarned: "",
-                ufHoursCarried: "",
-                transferHoursEarned: "",
-                terms: [{
-
-                }],
-                concentrations: "",
-                programs: [],
-                careerDescription: ""
-            }
-        }
+    const [accountBalance, setAccountBalance] = useState(8.31);
+    const [chargesDue, setChargesDue] = useState({
+        chargesDueLater: [],
+        chargesDueNow: [],
+        dueLaterTotal: 0,
+        dueNowTotal: 0,
+        totalAmountDue: 0,
     })
+    const [paymentLink, setPaymentLink] = useState({
+        title: "",
+        url: "",
+        isExternal: true
+    })
+    const [activities, setActivities] = useState([]);
+    const [paymentHistory, setHistory] = useState({
+        totalPaymentCount: 0,
+        totalPaymentAmount: 0,
+        minDate: "",
+        maxDate: "",
+        paymentDetail: []
+    });
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
-        const url = "http://34.136.6.158:5000/api/unofficialtranscript"
+        const url = "http://34.136.6.158:5000/api/";
         const headers = {
             'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_CHARLES_',
             'X-Host-Choice': 'mock-host'
         }
-        axios.get(url, { headers: headers }).then((res) => {
-            setTranscript(res.data);
-            setLoading(false);
+        axios.get(url + "accountbalance", { headers: headers }).then((res) => {
+            setAccountBalance(res.data.accountBalance);
         }).catch((err) => {
             console.log(err);
-        });
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
+        })
+        axios.get(url + "chargesdue", { headers: headers }).then((res) => {
+            setChargesDue(res.data);
+        }).catch((err) => {
+            console.log(err)
+        })
+        axios.get(url + "paymentlink", { headers: headers }).then((res) => {
+            setPaymentLink(res.data);
+        }).catch((err) => {
+            console.log(err)
+        })
+        axios.get(url + "accountactivities", { headers: headers }).then((res) => {
+            setActivities(res.data.activities);
+        }).catch((err) => {
+            console.log(err)
+        })
+        axios.get(url + "paymenthistory", { headers: headers }).then((res) => {
+            setHistory(res.data);
+            setLoading(false);
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
     return (
 
 
-    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} /></View> :
 
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
+            <ScrollView >
 
-        <View style={{ alignItems: "center", flex: 1 }}>
+                <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60}}>
 
-            <View style={styles.separator} />
-            <View style={styles.separator} />
+                    <View style={styles.separator} />
 
-            <View style={styles.personal_info}>
-                <Text style={styles.title}>USERNAME</Text>
-                <Text style={styles.title}></Text>
-                <Text style={styles.body}>Account Balance</Text>
-                <Text style={styles.title}></Text>
-                <Text style={styles.boldingprice}>- $8.10 due</Text>
-                
-            </View>
+                    <View style={styles.personal_info}>
+                        <Text style={styles.title}>USERNAME</Text>
+                        <Text style={styles.title}></Text>
+                        <Text style={styles.body}>Account Balance</Text>
+                        <Text style={styles.title}></Text>
+                        <Text style={styles.boldingprice}>${accountBalance}</Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.bluebutton}>
-                <View style={{backgroundColor:'#ced4f2'}}>
-                <Text style={styles.title}>Make a Payment</Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => {WebBrowser.openBrowserAsync(paymentLink.url)}} style={styles.bluebutton}>
+                        <View style={{ backgroundColor: '#285697' }}>
+                            <Text style={styles.title}>{paymentLink.title}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.bluebutton}>
+                        <View style={{ backgroundColor: '#285697' }}>
+                            <Text style={styles.title}>Direct Deposit Funds</Text>
+                        </View>
+                    </TouchableOpacity>
+
+
+
+                    <View style={styles.separator} />
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.title}>Charges Due</Text>
+                        <Charges name="Due Now" value={chargesDue.dueNowTotal} data={chargesDue.chargesDueNow}/>
+                        <Charges name="Due Later" value={chargesDue.dueLaterTotal} data={chargesDue.chargesDueLater}/>
+                    </View>
+
+
+                    <View>
+                        { }
+                    </View>
+
+
+
+                    <View style={styles.separator} />
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.title}>Refunds</Text>
+                    </View>
+
+                    <View>
+                        { }
+                    </View>
+
+
+                    <View style={styles.separator} />
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.title}>Payment History</Text>
+                    </View>
+
+                    <View>
+                        { }
+                    </View>
+
+
+                    <View style={styles.separator} />
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.title}>Account Activity</Text>
+                    </View>
+
+                    <View>
+                        { }
+                    </View>
+
+
+
+
                 </View>
-                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.bluebutton}>
-                <View style={{backgroundColor:'#ced4f2'}}>
-                <Text style={styles.title}>Direct Deposit Funds</Text>
-                </View>
-                </TouchableOpacity>
-
-            
-
-            <View style={styles.separator} />
-            <View style={{ alignItems: "center" }}>
-                <Text style={styles.title}>Charges Due</Text>
-                <Text style={styles.body}>Due Now:</Text>
-            </View>
-            
-
-                    <View>
-                        {class_list(transcript.records.undergraduate.terms)}
-                    </View>
-
-
-
-            <View style={styles.separator} />
-            <View style={{ alignItems: "center" }}>
-                <Text style={styles.title}>Refunds</Text>
-            </View>
-            
-                    <View>
-                        {class_list(transcript.records.undergraduate.terms)}
-                    </View>
-
-
-            <View style={styles.separator} />
-            <View style={{ alignItems: "center" }}>
-                <Text style={styles.title}>Payment History</Text>
-            </View>
-            
-                    <View>
-                        {class_list(transcript.records.undergraduate.terms)}
-                    </View>
-
-
-            <View style={styles.separator} />
-            <View style={{ alignItems: "center" }}>
-                <Text style={styles.title}>Account Activity</Text>
-            </View>
-            
-                    <View>
-                        {class_list(transcript.records.undergraduate.terms)}
-                    </View>
-
-
-
-
-        </View>
-
-        </ScrollView> 
+            </ScrollView>
 
 
     );
 }
 
-
-function class_list(terms: any) {
-    return (
-        terms.map((term: any, key: any) => {
-            return (
-                <Term term={term} key={key}/>
-            )
-        })
-    )
-}
-
-
-function Term(props: any) {
+function Charges(props: any) {
     const [pressed, press] = useState(false);
-    const term = props['term']
-    const key = props['key']
-    function onPress() {
-        press(!pressed)
-    }
-    if (term.creditSources.length == 0) {
-        return (
-            <View/>
-        )
-    }
+    const name = props.name;
+    const value = props.value;
+    const data = props.data;
     return (
-        <TouchableOpacity style={styles.classes} onPress={onPress}>
-            <Text style={styles.class_text} key={key}>Term: {term.termDescription}</Text>
-            {term.creditSources.map((source: any, key1: any) => {
-                return (
-                    pressed ? 
-                    <View>
-                        
-                        <Text style={{ paddingLeft: "5%" }}>Due Date: {source.currentGpa}{"\t"}Amount: {source.totalHoursEarned}</Text>
-                        <Text style={{ paddingLeft: "5%" }}>Description: {source.currentGpa}{"\t"}Running total: {source.totalHoursEarned}</Text>
+        <TouchableOpacity onPress={() => press(!pressed)}>
+            <Text>{name}: {value}</Text>
 
-                        
-                    </View> 
-                    : 
-                    <Text ></Text>                )
-            })}
         </TouchableOpacity>
     )
 }
-
-
-
-
-
 
 //
 const styles = StyleSheet.create({
@@ -280,48 +227,21 @@ const styles = StyleSheet.create({
     },
 
     bluebutton: {
-      top: 10,
-      backgroundColor: '#285697',
-      width: "95%",
-      height: "10%",
-      borderColor: '#285697',
-      borderWidth: 3,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      marginBottom: 15,
-      borderRadius: 5
+        top: 10,
+        backgroundColor: '#285697',
+        width: "70%",
+        height: "5%",
+        borderColor: '#285697',
+        borderWidth: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15,
+        borderRadius: 5
     },
 
     boldingprice: {
-      fontSize: 15,
-      fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
-
-    scrollView: {
-      //empty might delete later
-    },
-
-    contentContainer: {
-      paddingTop: 1,
-      paddingBottom: 200
-    },
-
-    classes: {
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        borderWidth: 2,
-        borderColor: "#285697",
-        marginTop: 15,
-        borderRadius: 15,
-        padding: 15,
-        paddingTop: 5,
-    },
-
-    class_text: {
-        textAlign: 'left',
-        fontSize: 17,
-        paddingLeft: 90,
-        paddingRight: 90,
-    }
 
 });
