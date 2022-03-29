@@ -19,6 +19,9 @@ import Finances from '../screens/Finances';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import Transcript from '../screens/Transcript';
+import ActionItems from '../screens/ActionItems';
+
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -42,6 +45,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Transcript" component={Transcript} options={{title: 'Unofficial Transcript', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="ActionItems" component={ActionItems} options={{title: 'Action Items', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
   );
 }
