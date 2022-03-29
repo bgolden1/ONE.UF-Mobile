@@ -129,39 +129,7 @@ function class_list(terms: any) {
     )
 }
 
-function Term(props: any) {
-    const [pressed, press] = useState(false);
-    const term = props['term']
-    const key = props['key']
-    function onPress() {
-        press(!pressed)
-    }
-    if (term.creditSources.length == 0) {
-        return (
-            <View/>
-        )
-    }
-    return (
-        <TouchableOpacity style={styles.classes} onPress={onPress}>
-            <Text style={styles.class_text} key={key}>{term.termDescription}</Text>
-            {term.creditSources.map((source: any, key1: any) => {
-                return (
-                    pressed ? 
-                    <View>
-                        <Text style={{ paddingLeft: "5%" }}>{source.sourceDescription}{"\t"}GPA: {source.currentGpa}{"\t"}Hours: {source.totalHoursEarned}</Text>
-                        {source.sessions[0].courses.map((course: any, key2: any) => {
-                            return(
-                                <Text>{course.subject}{course.catalogNumber}{"\t"}{course.title}{"\t"}{course.grade == 0 ? "-" : course.grade}{"\t"}{course.hoursEarned}</Text>
-                            )
-                        })}
-                    </View> 
-                    : 
-                    <Text style={{ paddingLeft: "5%" }}>{source.sourceDescription}{"\t"}GPA: {source.currentGpa}{"\t"}Hours: {source.totalHoursEarned}</Text>
-                )
-            })}
-        </TouchableOpacity>
-    )
-}
+
 
 
 const styles = StyleSheet.create({
