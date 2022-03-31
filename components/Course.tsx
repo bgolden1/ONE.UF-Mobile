@@ -1,6 +1,7 @@
 import { Text, useThemeColor, View } from '../components/Themed';
-import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export function Courses(props: any) {
     const courses = props['courses'];
@@ -43,11 +44,12 @@ function Course(props: any) {
                                 <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center', width: "100%" }}>
                                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.body}>Instructor(s): </Text>
-                                        {section.instructors.map((instructor: any, key2: any) => {
+                                        {section.instructors.length > 0 ? 
+                                            section.instructors.map((instructor: any, key2: any) => {
                                             return (
-                                                <Text key={key2} style={styles.body}>{instructor.name}</Text>
+                                                <Instructor_eval instructor={instructor.name}/>
                                             );
-                                        })}
+                                        }) : <Text style={styles.body}>STAFF</Text>}
                                     </View>
                                     <Text/>
                                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -65,6 +67,36 @@ function Course(props: any) {
                 }
             </View>
         </TouchableOpacity>);
+}
+
+function Instructor_eval(props: any) {
+    const instructor = props.instructor;
+    const [score, setScore] = useState(0);
+    const [isLoading, setLoading] = useState(true);
+    const [color, setColor] = useState("orange");
+    axios.post("http://34.136.6.158:5000/api/professor_eval", {"prof_name": instructor}).then((res) => {
+        const tempScore = Math.round(res.data.Score * 100) / 100;
+        setScore(tempScore);
+        if (tempScore >= 9) {
+            setColor("#006400");
+        }
+        else if (tempScore >= 8) {
+            setColor("green");
+        }
+        else if (tempScore >= 7) {
+            setColor("#ffd500");
+        }
+        else if (tempScore == -1) {
+            setColor("black");
+            setScore(NaN)
+        }
+        setLoading(false);
+    }).catch((err) => {
+        console.log(err);
+    })
+    return (
+        isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> : <Text style={[styles.body, {color: color}]}>{instructor}: {score}</Text>
+    )
 }
 
 
