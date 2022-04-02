@@ -68,12 +68,12 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
     return (
 
 
-        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
 
 
             <ScrollView >
 
-                <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60}}>
+                <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60 }}>
 
                     <View style={styles.separator} />
 
@@ -86,7 +86,7 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
 
                     </View>
 
-                    <TouchableOpacity onPress={() => {WebBrowser.openBrowserAsync(paymentLink.url)}} style={styles.bluebutton}>
+                    <TouchableOpacity onPress={() => { WebBrowser.openBrowserAsync(paymentLink.url) }} style={styles.bluebutton}>
                         <View style={{ backgroundColor: '#285697' }}>
                             <Text style={styles.title}>{paymentLink.title}</Text>
                         </View>
@@ -103,8 +103,8 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
                     <View style={styles.separator} />
                     <View style={{ alignItems: "center" }}>
                         <Text style={styles.title}>Charges Due</Text>
-                        <Charges name="Due Now" value={chargesDue.dueNowTotal} data={chargesDue.chargesDueNow}/>
-                        <Charges name="Due Later" value={chargesDue.dueLaterTotal} data={chargesDue.chargesDueLater}/>
+                        <Charges name="Due Now" value={chargesDue.dueNowTotal} data={chargesDue.chargesDueNow} />
+                        <Charges name="Due Later" value={chargesDue.dueLaterTotal} data={chargesDue.chargesDueLater} />
                     </View>
 
 
@@ -161,8 +161,21 @@ function Charges(props: any) {
     const data = props.data;
     return (
         <TouchableOpacity onPress={() => press(!pressed)}>
-            <Text>{name}: {value}</Text>
-
+            <View style={styles.section}>
+                <Text style={{ textDecorationLine: "underline" }}>{name}: {value}</Text>
+                {value != 0 && pressed &&
+                    data.map((entry: any, key: any) => {
+                        return (
+                            <View style={styles.subsection}>
+                                <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{entry.term}</Text>
+                                <Text style={{textAlign: 'center'}}>{entry.description}: {entry.amount}</Text>
+                                <Text style={{textAlign: 'center'}}>Due: {entry.dueDate}</Text>
+                            </View>
+                        )
+                        
+                    })
+                    }
+            </View>
         </TouchableOpacity>
     )
 }
@@ -243,5 +256,28 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
     },
+
+    subsection: {
+        alignSelf: 'center',
+        width: '90%',
+        borderColor: 'grey',
+        borderWidth: 2,
+        borderRadius: 15,
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+        paddingBottom: 15,
+    },
+    section: {
+        alignSelf: 'center',
+        width: '90%',
+        borderColor: '#285697',
+        borderWidth: 2,
+        borderRadius: 15,
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+        paddingBottom: 15,
+    }
 
 });
