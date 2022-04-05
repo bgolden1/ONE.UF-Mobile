@@ -5,6 +5,12 @@ import { StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'rea
 import { Text, View } from '../components/Themed';
 
 export default function ActionItems() {
+    const [pressed, press] = useState(false);
+
+    function onPress() {
+        press(!pressed)
+    }
+
     const [holds, setHolds] = useState({
     groups:[
 
@@ -116,8 +122,79 @@ export default function ActionItems() {
 
 
                 <Text style={styles.title}> Holds </Text>
+                
 
-    
+
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.title}>{"\n"}Meet time(s):</Text>
+                    {holds.groups.map((object: any, key: any) => {
+                    return (
+
+                        <View style={styles.personal_info}>
+                            
+
+                            <TouchableOpacity style={styles.classes} onPress={onPress} key = {'key'}>
+
+                            <Text style={styles.body}>{object.label}</Text>
+
+                            {object.holds.map((object2: any, key2: any) => {
+                            return (
+                                
+                                pressed ? 
+
+                                <Text style={styles.body}>{"\n"}Label:{"\n"}{object2.label }{"\n"}{"\n"}Details:{"\n"}{object2.details}{"\n"}{"\n"}
+                                Term:{"\n"}{object2.term}{"\n"}{"\n"}Start Term Code:{"\n"}{object2.startTermCode}{"\n"}{"\n"}End Term Code:{"\n"}{object2.endTermCode}{"\n"}{"\n"}
+                                Contact Phone:{"\n"}{object2.contactPhone}{"\n"}{"\n"}Contact Email:{"\n"}{object2.contactEmail}{"\n"}{"\n"}
+                                Start Date:{"\n"}{object2.startDate}{"\n"}{"\n"}Hold Code:{"\n"}{object2.holdCode}{"\n"}{"\n"}Source Name:{"\n"}{object2.sourceName}{"\n"}{"\n"}
+                                Time Stamp:{"\n"}{object2.timeStamp}</Text>
+
+                                :
+                                <Text style={styles.body}>{"\n"}Label:{"\n"}{object2.label }</Text>
+
+                                );
+                            })}
+
+                            </TouchableOpacity>
+
+                        </View>
+
+                        );
+                    })}
+
+                    <Text style={styles.title}>{"\n"}Personal Info:</Text>
+
+                    <TouchableOpacity style={styles.classes2} onPress={onPress} key = {'key2'}>
+
+                    {holds.info.map((object2: any, key: any) => {
+                    return (
+
+                        pressed ?
+                        <View style={styles.personal_info}>
+                            
+
+                            <Text style={styles.body}>{"\n"}Label:{"\n"}{object2.label }{"\n"}{"\n"}Details:{"\n"}{object2.details}{"\n"}{"\n"}
+                                Term:{"\n"}{object2.term}{"\n"}{"\n"}Start Term Code:{"\n"}{object2.startTermCode}{"\n"}{"\n"}End Term Code:{"\n"}{object2.endTermCode}{"\n"}{"\n"}
+                                Contact Phone:{"\n"}{object2.contactPhone}{"\n"}{"\n"}Contact Email:{"\n"}{object2.contactEmail}{"\n"}{"\n"}
+                                Start Date:{"\n"}{object2.startDate}{"\n"}{"\n"}Hold Code:{"\n"}{object2.holdCode}{"\n"}{"\n"}Source Name:{"\n"}{object2.sourceName}{"\n"}{"\n"}
+                                Time Stamp:{"\n"}{object2.timeStamp}</Text>
+
+                        </View>
+
+                        :
+                        <View style={styles.personal_info}>
+                            
+
+                            <Text style={styles.body}>{"\n"}Label:{"\n"}{object2.label }</Text>
+                        </View>
+
+
+                        );
+                    })}
+
+                    </TouchableOpacity>
+
+
+                </View>
 
 
 
@@ -174,14 +251,8 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     classes: {
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        borderWidth: 2,
-        borderColor: "#285697",
-        marginTop: 15,
-        borderRadius: 15,
-        padding: 15,
-        paddingTop: 5,
+    },
+    classes2: {
     },
     class_text: {
         textAlign: 'left',
