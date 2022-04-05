@@ -92,56 +92,23 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.bluebutton}>
-                        <View style={{ backgroundColor: '#285697' }}>
-                            <Text style={styles.title}>Direct Deposit Funds</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={styles.separator} />
 
+                    <Charges now_name="Due Now" now_value={chargesDue.dueNowTotal} now_data={chargesDue.chargesDueNow}
+                        later_name="Due Later" later_value={chargesDue.dueLaterTotal} later_data={chargesDue.chargesDueLater} />
+
+                    <View style={styles.separator} />
+
+                    <Refunds data={activities}/>
 
 
                     <View style={styles.separator} />
-                    <View style={{ alignItems: "center" }}>
-                        <Text style={styles.title}>Charges Due</Text>
-                        <Charges name="Due Now" value={chargesDue.dueNowTotal} data={chargesDue.chargesDueNow} />
-                        <Charges name="Due Later" value={chargesDue.dueLaterTotal} data={chargesDue.chargesDueLater} />
-                    </View>
 
-
-                    <View>
-                        { }
-                    </View>
-
-
+                    <PaymentHistory data={paymentHistory.paymentDetail}/>
 
                     <View style={styles.separator} />
-                    <View style={{ alignItems: "center" }}>
-                        <Text style={styles.title}>Refunds</Text>
-                    </View>
 
-                    <View>
-                        { }
-                    </View>
-
-
-                    <View style={styles.separator} />
-                    <View style={{ alignItems: "center" }}>
-                        <Text style={styles.title}>Payment History</Text>
-                    </View>
-
-                    <View>
-                        { }
-                    </View>
-
-
-                    <View style={styles.separator} />
-                    <View style={{ alignItems: "center" }}>
-                        <Text style={styles.title}>Account Activity</Text>
-                    </View>
-
-                    <View>
-                        { }
-                    </View>
+                    <AccountActivity data={activities}/>
 
 
 
@@ -156,31 +123,116 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
 
 function Charges(props: any) {
     const [pressed, press] = useState(false);
-    const name = props.name;
-    const value = props.value;
-    const data = props.data;
+    const now_name = props.now_name;
+    const now_value = props.now_value;
+    const now_data = props.now_data;
+
+    const later_name = props.later_name;
+    const later_value = props.later_value;
+    const later_data = props.later_data;
     return (
-        <TouchableOpacity onPress={() => press(!pressed)}>
-            <View style={styles.section}>
-                <Text style={{ textDecorationLine: "underline" }}>{name}: {value}</Text>
-                {value != 0 && pressed &&
-                    data.map((entry: any, key: any) => {
-                        return (
-                            <View style={styles.subsection}>
-                                <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{entry.term}</Text>
-                                <Text style={{textAlign: 'center'}}>{entry.description}: {entry.amount}</Text>
-                                <Text style={{textAlign: 'center'}}>Due: {entry.dueDate}</Text>
-                            </View>
-                        )
-                        
-                    })
-                    }
-            </View>
+        <TouchableOpacity onPress={() => press(!pressed)} style={styles.section}>
+            <Text style={styles.title}>Charges Due</Text>
+            <Text style={{ textDecorationLine: "underline" }}>{now_name}: ${now_value}</Text>
+            {now_value != 0 && pressed &&
+                now_data.map((entry: any, key: any) => {
+                    return (
+                        <View style={styles.subsection} key={key}>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.term}</Text>
+                            <Text style={{ textAlign: 'center' }}>{entry.description}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center' }}>Due: {entry.dueDate}</Text>
+                        </View>
+                    )
+
+                })
+            }
+            <Text style={{ textDecorationLine: "underline" }}>{later_name}: ${later_value}</Text>
+            {later_value != 0 && pressed &&
+                later_data.map((entry: any, key: any) => {
+                    return (
+                        <View style={styles.subsection} key={key}>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.term}</Text>
+                            <Text style={{ textAlign: 'center' }}>{entry.description}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center' }}>Due: {entry.dueDate}</Text>
+                        </View>
+                    )
+
+                })
+            }
         </TouchableOpacity>
     )
 }
 
-//
+function Refunds(props: any) {
+    const [pressed, press] = useState(false);
+    const data = props.data;
+    return (
+        <TouchableOpacity onPress={() => press(!pressed)} style={styles.section}>
+            <Text style={styles.title}>Refunds</Text>
+            {pressed && 
+            (data.length > 0 ? 
+            data.map((entry: any, key: any) => {
+                if (entry.transactionType == 'Refund') {
+                    return(
+                        <View style={styles.subsection} key={key}>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.termDescription}</Text>
+                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                        </View>
+                    )
+                }
+            }) :
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No refunds found </Text>)
+            } 
+        </TouchableOpacity>
+    )
+}
+
+function PaymentHistory(props: any) {
+    const [pressed, press] = useState(false);
+    const data = props.data;
+    return (
+        <TouchableOpacity onPress={() => press(!pressed)} style={styles.section}>
+            <Text style={styles.title}>Payment History</Text>
+            {pressed && 
+            (data.length > 0 ? 
+            data.map((entry: any, key: any) => {
+                return(
+                        <View style={styles.subsection} key={key}>
+                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                        </View>
+                    )
+            }) :
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No payments found </Text>)
+            } 
+        </TouchableOpacity>
+    )
+}
+
+function AccountActivity(props: any) {
+    const [pressed, press] = useState(false);
+    const data = props.data;
+    return (
+        <TouchableOpacity onPress={() => press(!pressed)} style={styles.section}>
+            <Text style={styles.title}>Account Activity</Text>
+            {pressed && 
+            (data.length > 0 ? 
+            data.map((entry: any, key: any) => {
+                    return(
+                        <View style={styles.subsection} key={key}>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.termDescription}</Text>
+                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                        </View>
+                    )
+            }) :
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No refunds found </Text>)
+            } 
+        </TouchableOpacity>
+    )
+}
+
 const styles = StyleSheet.create({
     personal_info: {
         justifyContent: "flex-start",
@@ -189,11 +241,9 @@ const styles = StyleSheet.create({
         borderColor: "#285697",
         marginTop: 1,
         borderRadius: 15,
-        paddingLeft: 120,
-        paddingRight: 120,
         paddingBottom: 1,
-        //padding: 85,
         paddingTop: 1,
+        width: '90%'
     },
 
 
@@ -226,6 +276,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        alignSelf: 'center'
     },
     separator: {
         marginVertical: 30,
@@ -243,7 +294,7 @@ const styles = StyleSheet.create({
         top: 10,
         backgroundColor: '#285697',
         width: "70%",
-        height: "5%",
+        height: 50,
         borderColor: '#285697',
         borderWidth: 3,
         justifyContent: 'flex-start',
@@ -278,6 +329,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 5,
         paddingBottom: 15,
+        alignItems: 'center'
     }
 
 });

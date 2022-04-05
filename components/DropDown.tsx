@@ -13,10 +13,10 @@ export default function DropDown(props: any) {
     const z = props['zIndex']
     const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
     return (
-    <DropDownPicker items={items.map((item: any) => {
+    <DropDownPicker items={items.map((item: any, key: any) => {
         return {
-            label: item["DESC"],
-            value: item["CODE"]
+            "label": item["DESC"],
+            "value": item["CODE"]
         }
     })} multiple={false} value={selectedValue} setValue={setSelectedValue} open={open} setOpen={setOpen} style={{maxWidth: '100%', maxHeight: '100%'}} 
     zIndex={z} zIndexInverse={5000-z}/>
