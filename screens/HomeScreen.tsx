@@ -6,22 +6,11 @@ import { RootTabScreenProps } from '../types';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
-      <View style={{
-        top: 100,
-        backgroundColor: '#d18c8c',
-        width: "95%",
-        height: "20%",
-        borderColor: '#FF3D00',
-        borderWidth: 3,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginBottom: 15,
-        borderRadius: 15
-      }}>
-        <Text style={styles.title}>Holds</Text>
+      <View style={styles.box}>
+        <Text style={styles.title}>Action Items</Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.unofficial_transcript}>
-        <View style={{backgroundColor:'#ced4f2'}}>
+      <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.box}>
+        <View>
           <Text style={styles.title}>Unofficial Transcript</Text>
         </View>
       </TouchableOpacity>
@@ -32,12 +21,14 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#eaeaea',
     flexDirection: 'column',
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginTop: 5,
+    fontSize: 25,
+    fontWeight: '200',
   },
   separator: {
     marginVertical: 30,
@@ -48,16 +39,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
   },
-  unofficial_transcript: {
+  box: {
     top: 100,
-    backgroundColor: '#ced4f2',
+    backgroundColor: '#ffffff',
     width: "95%",
     height: "20%",
-    borderColor: '#003Dff',
-    borderWidth: 3,
+    borderColor: '#a6a6a6',
+    borderWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 15,
-    borderRadius: 15
+    borderRadius: 6
   }
 });
