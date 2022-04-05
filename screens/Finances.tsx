@@ -31,6 +31,14 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
         maxDate: "",
         paymentDetail: []
     });
+    const [user, setUser] = useState({
+        name: "",
+        legalName: "",
+        ufid: "",
+        apps: [],
+        email: "",
+        switchUser: false
+    })
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         const url = "http://34.136.6.158:5000/api/";
@@ -60,6 +68,11 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
         })
         axios.get(url + "paymenthistory", { headers: headers }).then((res) => {
             setHistory(res.data);
+        }).catch((err) => {
+            console.log(err)
+        })
+        axios.get(url + "user", {headers: headers}).then((res) => {
+            setUser(res.data);
             setLoading(false);
         }).catch((err) => {
             console.log(err)
@@ -78,7 +91,7 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
                     <View style={styles.separator} />
 
                     <View style={styles.personal_info}>
-                        <Text style={styles.title}>USERNAME</Text>
+                        <Text style={styles.title}>{user.name}</Text>
                         <Text style={styles.title}></Text>
                         <Text style={styles.body}>Account Balance</Text>
                         <Text style={styles.title}></Text>
@@ -109,9 +122,6 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
                     <View style={styles.separator} />
 
                     <AccountActivity data={activities}/>
-
-
-
 
                 </View>
 
@@ -244,18 +254,6 @@ const styles = StyleSheet.create({
         paddingBottom: 1,
         paddingTop: 1,
         width: '90%'
-    },
-
-
-    try_this: {
-        justifyContent: "flex-start",
-        alignItems: "center",
-        marginTop: 1,
-        paddingLeft: 110,
-        paddingRight: 110,
-        paddingBottom: 25,
-        paddingTop: 15,
-
     },
 
     gpa: {

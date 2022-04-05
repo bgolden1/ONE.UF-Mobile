@@ -20,6 +20,7 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import Transcript from '../screens/Transcript';
 import ActionItems from '../screens/ActionItems';
+import SOC from '../screens/SOC';
 
 
 
@@ -46,6 +47,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Transcript" component={Transcript} options={{title: 'Unofficial Transcript', headerTitleStyle: {fontSize: 25}}}/>
       <Stack.Screen name="ActionItems" component={ActionItems} options={{title: 'Action Items', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="SOC" component={SOC} options={{title: 'Schedule of Courses', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
   );
 }
