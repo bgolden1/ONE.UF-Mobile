@@ -1,9 +1,29 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
+import React, { useEffect, useState } from 'react';
+
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
+import axios from 'axios';
+import { Agenda } from 'react-native-calendars'
+
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
+  const [myEvents, setEvents] = useState();
+
+
+  useEffect(() => {
+    const url = "http://34.136.6.158:5000/api/";
+    axios.get(url + "calendar_21_22")
+    .then((res)=> {
+      setEvents(res.data)
+      //console.log(res.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
       
@@ -18,10 +38,30 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
           <Text style={styles.title}>Unofficial Transcript</Text>
         </View>
       </TouchableOpacity>
+
+    
+      <Agenda
+        items={myEvents}
+        style={{width: "80%", height: "80%"}}
+        // Specify how to render a date with content
+        renderDay={(day, item) => {
+          return <View><Text>{day?.toString() + " | " + item?.name}</Text></View>;
+        }}
+        // Specify how empty date content with no items should be rendered
+        renderEmptyDate={() => {
+          return <View><Text>Nothing to see here...</Text></View>;
+        }}
+        // Specify what should be rendered instead of ActivityIndicator
+        renderEmptyData={() => {
+          return <View><Text>Nothing to see here...</Text></View>;
+        }}
+      />
+
     </View>
   );
+  
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
