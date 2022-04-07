@@ -53,7 +53,7 @@ export default function ActionItems() {
 
                                 {hold_type.holds.map((hold: any, key2: any) => {
                                     return (
-                                        <Holds hold={hold} />
+                                        <DisplayData data={hold} />
                                     );
                                 })}
 
@@ -67,7 +67,7 @@ export default function ActionItems() {
                     <View style={styles.section}>
                         {holds.info.map((info: any, key: any) => {
                             return (
-                                <Info info={info} />
+                                <DisplayData data={info} />
                             );
                         })}
                     </View>
@@ -83,36 +83,16 @@ export default function ActionItems() {
 
 }
 
-function Holds(props: any) {
+function DisplayData(props: any) {
     const [pressed, press] = useState(false);
-    const hold = props.hold;
+    const data = props.data;
     const { width } = useWindowDimensions()
     const details = {
-        html: hold.details
+        html: data.details
     }
     return (
         <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
-            <Text style={[styles.body]}>{hold.label}</Text>
-            {pressed &&
-                <View>
-                    <RenderHtml contentWidth={width} source={details} />
-                </View>
-            }
-
-        </TouchableOpacity>
-    )
-}
-
-function Info(props: any) {
-    const [pressed, press] = useState(false);
-    const info = props.info;
-    const { width } = useWindowDimensions()
-    const details = {
-        html: info.details
-    }
-    return (
-        <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
-            <Text style={[styles.body]}>{info.label}</Text>
+            <Text style={[styles.body]}>{data.label}</Text>
             {pressed &&
                 <View>
                     <RenderHtml contentWidth={width} source={details} />
