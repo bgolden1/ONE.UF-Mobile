@@ -37,7 +37,7 @@ export default function ActionItems() {
         }).catch((err) => {
             console.log(err);
         });
-    });
+    }, []);
 
     return (
         isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :

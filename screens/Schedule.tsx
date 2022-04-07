@@ -30,7 +30,7 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
       console.log(err);
     })
     
-  })
+  }, [])
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
       <ScrollView >
