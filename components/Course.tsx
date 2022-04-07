@@ -138,6 +138,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingTop: '30%'
+        paddingTop: 50
     }
 });

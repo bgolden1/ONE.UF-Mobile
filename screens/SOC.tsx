@@ -71,7 +71,7 @@ export default function SOC() {
   }
   return (
     <View style={styles.container}>
-      {failed ? <View style={{ position: 'absolute', left: 0, top: '10%' }}>
+      {failed ? <View style={{ position: 'absolute', left: 0, top: 0 }}>
         <Button title="<Return to Search" onPress={returnToSearch} />
         <Text style={[styles.title, { alignSelf: 'center' }]}>No results found</Text>
       </View> :
@@ -113,7 +113,7 @@ export default function SOC() {
               </ScrollView> :
               <View style={styles.container}>
                 <Courses courses={results['COURSES']} />
-                <View style={{ position: 'absolute', left: '0%', top: '10%' }}>
+                <View style={{ position: 'absolute', left: '0%', top: 0 }}>
                   <Button title="<Return to Search" onPress={returnToSearch} />
                 </View>
               </View>
