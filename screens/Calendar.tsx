@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import React, { useEffect, useState } from 'react';
 
@@ -10,13 +10,15 @@ import { Agenda, AgendaEntry } from 'react-native-calendars'
 
 export default function Calendar({ navigation }: RootTabScreenProps<'Home'>) {
   const [myEvents, setEvents] = useState();
+  const [isLoading, setLoading] = useState(true);
 
 
   useEffect(() => {
     const url = "http://34.136.6.158:5000/api/";
     axios.get(url + "calendar_21_22")
     .then((res)=> {
-      setEvents(res.data)
+      setEvents(res.data);
+      setLoading(false)
       //console.log(res.data)
     })
     .catch((error) => {
@@ -48,6 +50,7 @@ export default function Calendar({ navigation }: RootTabScreenProps<'Home'>) {
 
 
   return (
+    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
     <View style={{ alignItems: "center", flex: 1 }}>
       <Agenda
         items={myEvents}
