@@ -44,7 +44,7 @@ export default function ActionItems() {
             <ScrollView>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={styles.title}>{"\n"}Holds:</Text>
-                    {holds.groups.map((hold_type: any, key: any) => {
+                    {holds.groups.length > 0 ? holds.groups.map((hold_type: any, key: any) => {
                         return (
 
                             <View style={styles.section}>
@@ -60,17 +60,39 @@ export default function ActionItems() {
                             </View>
 
                         );
-                    })}
+                    }) :
+                    <Text style={styles.body}>You currently do not have any holds</Text>}
 
                     <Text style={styles.title}>{"\n"}Info:</Text>
 
                     <View style={styles.section}>
-                        {holds.info.map((info: any, key: any) => {
+                        {holds.info.length > 0 ? holds.info.map((info: any, key: any) => {
                             return (
                                 <DisplayData data={info} />
                             );
-                        })}
+                        }):
+                        <Text style={styles.body}>You currently do not have any info items</Text>}
                     </View>
+
+                    <Text style={styles.title}>{"\n"}Todo:</Text>
+                    {todos.groups.length > 0 ? todos.groups.map((todo_type: any, key: any) => {
+                        return (
+
+                            <View style={styles.section}>
+
+                                <Text style={styles.body}>{todo_type.label}</Text>
+
+                                {todo_type.todos.map((hold: any, key2: any) => {
+                                    return (
+                                        <DisplayData data={hold} />
+                                    );
+                                })}
+
+                            </View>
+
+                        );
+                    }) :
+                    <Text style={styles.body}>You currently do not have any todo items</Text>}
 
                 </View>
 
