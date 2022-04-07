@@ -6,23 +6,46 @@ import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
 import axios from 'axios';
-import { Agenda } from 'react-native-calendars'
+import { Agenda, AgendaEntry } from 'react-native-calendars'
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   const [myEvents, setEvents] = useState();
 
 
-  useEffect(() => {
-    const url = "http://34.136.6.158:5000/api/";
-    axios.get(url + "calendar_21_22")
-    .then((res)=> {
-      setEvents(res.data)
-      //console.log(res.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }, [])
+  // useEffect(() => {
+  //   const url = "http://34.136.6.158:5000/api/";
+  //   axios.get(url + "calendar_21_22")
+  //   .then((res)=> {
+  //     setEvents(res.data)
+  //     //console.log(res.data)
+  //   })
+  //   .catch((error) => {
+  //     console.log(error)
+  //   })
+  // }, [])
+
+  // let renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
+  //   const fontSize = 14; //isFirst ? 16 : 14;
+  //   const color = 'black'; //isFirst ? 'black' : '#43515c';
+
+  //   return (
+  //     <TouchableOpacity
+  //       style={[styles.item, {height: reservation.height}]}
+  //       onPress={() => console.log(reservation.name)}
+  //     >
+  //       <Text style={{fontSize, color}}>{reservation.name}</Text>
+  //     </TouchableOpacity>
+  //   );
+  // }
+
+  // let renderEmptyDate = () => {
+  //   return (
+  //     <View style={styles.emptyDate}>
+  //       <Text>This is empty date!</Text>
+  //     </View>
+  //   );
+  // }
+
 
   return (
     <View style={styles.container}>
@@ -39,23 +62,20 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
         </View>
       </TouchableOpacity>
 
-    
-      <Agenda
+      <TouchableOpacity onPress={() => navigation.navigate("Calendar")} style={styles.unofficial_transcript}>
+        <View style={{backgroundColor:'#ced4f2'}}>
+          <Text style={styles.title}>Academic Calendar</Text>
+        </View>
+      </TouchableOpacity>
+
+      {/*<Agenda
         items={myEvents}
-        style={{width: "80%", height: "80%"}}
-        // Specify how to render a date with content
-        renderDay={(day, item) => {
-          return <View><Text>{day?.toString() + " | " + item?.name}</Text></View>;
-        }}
+        style={styles.calendar}
+        renderItem={renderItem}
         // Specify how empty date content with no items should be rendered
-        renderEmptyDate={() => {
-          return <View><Text>Nothing to see here...</Text></View>;
-        }}
-        // Specify what should be rendered instead of ActivityIndicator
-        renderEmptyData={() => {
-          return <View><Text>Nothing to see here...</Text></View>;
-        }}
-      />
+        renderEmptyDate={renderEmptyDate}
+  />*/}
+      
 
     </View>
   );
@@ -105,6 +125,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15,
         borderRadius: 15
-  }
+  } 
 
 });

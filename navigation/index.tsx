@@ -16,6 +16,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Schedule from '../screens/Schedule';
 import Finances from '../screens/Finances';
+import Calendar from '../screens/Calendar';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import Transcript from '../screens/Transcript';
@@ -46,6 +47,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Transcript" component={Transcript} options={{title: 'Unofficial Transcript', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="Calendar" component={Calendar} options={{title: 'Academic Calendar', headerTitleStyle: {fontSize: 25}}}/>
       <Stack.Screen name="ActionItems" component={ActionItems} options={{title: 'Action Items', headerTitleStyle: {fontSize: 25}}}/>
       <Stack.Screen name="SOC" component={SOC} options={{title: 'Schedule of Courses', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
