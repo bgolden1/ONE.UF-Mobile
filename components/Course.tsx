@@ -3,6 +3,8 @@ import { StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'rea
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+var professor_scores = new Map();
+
 export function Courses(props: any) {
     const courses = props['courses'];
 
@@ -44,14 +46,14 @@ function Course(props: any) {
                                 <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center', width: "100%" }}>
                                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.body}>Instructor(s): </Text>
-                                        {section.instructors.length > 0 ? 
+                                        {section.instructors.length > 0 ?
                                             section.instructors.map((instructor: any, key2: any) => {
-                                            return (
-                                                <Instructor_eval instructor={instructor.name}/>
-                                            );
-                                        }) : <Text style={styles.body}>STAFF</Text>}
+                                                return (
+                                                    <Instructor_eval instructor={instructor.name} />
+                                                );
+                                            }) : <Text style={styles.body}>STAFF</Text>}
                                     </View>
-                                    <Text/>
+                                    <Text />
                                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.body}>Meet time(s):</Text>
                                         {section.meetTimes.map((meetTime: any, key3: any) => {
@@ -74,8 +76,9 @@ function Instructor_eval(props: any) {
     const [score, setScore] = useState(0);
     const [isLoading, setLoading] = useState(true);
     const [color, setColor] = useState("orange");
-    axios.post("http://34.136.6.158:5000/api/professor_eval", {"prof_name": instructor}).then((res) => {
-        const tempScore = Math.round(res.data.Score * 100) / 100;
+    if (score != 0) {}
+    else if (professor_scores.has(instructor)) {
+        const tempScore = professor_scores.get(instructor)
         setScore(tempScore);
         if (tempScore >= 9) {
             setColor("#006400");
@@ -91,11 +94,33 @@ function Instructor_eval(props: any) {
             setScore(NaN)
         }
         setLoading(false);
-    }).catch((err) => {
-        console.log(err);
-    })
+    }
+    else {
+        axios.post("http://34.136.6.158:5000/api/professor_eval", { "prof_name": instructor }).then((res) => {
+            const tempScore = Math.round(res.data.Score * 100) / 100;
+            professor_scores.set(instructor, tempScore);
+            setScore(tempScore);
+            if (tempScore >= 9) {
+                setColor("#006400");
+            }
+            else if (tempScore >= 8) {
+                setColor("green");
+            }
+            else if (tempScore >= 7) {
+                setColor("#ffd500");
+            }
+            else if (tempScore == -1) {
+                setColor("black");
+                setScore(NaN)
+            }
+            setLoading(false);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
     return (
-        isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> : <Text style={[styles.body, {color: color}]}>{instructor}: {score}</Text>
+        isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> : <Text style={[styles.body, { color: color }]}>{instructor}: {score}</Text>
     )
 }
 
