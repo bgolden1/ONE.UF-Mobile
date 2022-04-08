@@ -86,7 +86,7 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
 
             <ScrollView >
 
-                <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60 }}>
+                <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60, backgroundColor: '#eaeaea'}}>
 
                     <View style={styles.separator} />
 
@@ -247,13 +247,13 @@ const styles = StyleSheet.create({
     personal_info: {
         justifyContent: "flex-start",
         alignItems: "center",
-        borderWidth: 3,
-        borderColor: "#285697",
         marginTop: 1,
-        borderRadius: 15,
         paddingBottom: 1,
         paddingTop: 1,
-        width: '90%'
+        width: '90%',
+        borderWidth: 1,
+        borderColor: '#a6a6a6',
+        borderRadius: 6
     },
 
     gpa: {
@@ -320,14 +320,15 @@ const styles = StyleSheet.create({
     section: {
         alignSelf: 'center',
         width: '90%',
-        borderColor: '#285697',
-        borderWidth: 2,
-        borderRadius: 15,
         marginTop: 10,
         marginBottom: 10,
         padding: 5,
         paddingBottom: 15,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#a6a6a6',
+        borderRadius: 6,
+        backgroundColor: '#fff'
     }
 
 });
