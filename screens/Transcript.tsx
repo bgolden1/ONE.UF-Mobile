@@ -75,23 +75,23 @@ export default function Transcript() {
                     </View>
                     <View style={styles.gpa}>
                         <View style={styles.columns}>
-                            <Text style={{fontWeight: 'bold'}}>Cumulative GPA:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>Cumulative GPA:</Text>
                             <Text>{transcript.records.undergraduate.ufGpa}{"\n"}</Text>
 
-                            <Text style={{fontWeight: 'bold'}}>Total Hours:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>Total Hours:</Text>
                             <Text>{transcript.records.undergraduate.totalHoursEarned}{"\n"}</Text>
 
-                            <Text style={{fontWeight: 'bold'}}>UF Hours Carried:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>UF Hours Carried:</Text>
                             <Text>{transcript.records.undergraduate.ufHoursCarried}</Text>
                         </View>
                         <View style={styles.columns}>
-                            <Text style={{fontWeight: 'bold'}}>Cumulative Grade Points:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>Cumulative Grade Pnts:</Text>
                             <Text>{transcript.records.undergraduate.gradePointsEarned}{"\n"}</Text>
 
-                            <Text style={{fontWeight: 'bold'}}>UF Cumulative Hours:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>UF Cumulative Hours:</Text>
                             <Text>{transcript.records.undergraduate.ufHoursEarned}{"\n"}</Text>
 
-                            <Text style={{fontWeight: 'bold'}}>Transfer Hours:</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>Transfer Hours:</Text>
                             <Text>{transcript.records.undergraduate.transferHoursEarned}</Text>
                         </View>
                     </View>
@@ -208,23 +208,23 @@ const styles = StyleSheet.create({
     personal_info: {
         justifyContent: "flex-start",
         alignItems: "center",
-        borderWidth: 2,
-        borderColor: "#285697",
         marginTop: 15,
-        borderRadius: 15,
         padding: 15,
         paddingTop: 5,
+        borderWidth: 1,
+        borderColor: '#a6a6a6',
+        borderRadius: 6,
     },
     gpa: {
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        borderWidth: 2,
-        borderColor: "#285697",
         marginTop: 15,
-        borderRadius: 15,
         padding: 15,
         paddingTop: 5,
+        borderWidth: 1,
+        borderColor: '#a6a6a6',
+        borderRadius: 6
     },
     columns: {
         alignItems: 'center',
@@ -250,10 +250,10 @@ const styles = StyleSheet.create({
         width: '75%',
         justifyContent: "center",
         alignItems: "flex-start",
-        borderWidth: 2,
-        borderColor: "#285697",
+        borderWidth: 1,
+        borderColor: '#a6a6a6',
+        borderRadius: 6,
         marginTop: 15,
-        borderRadius: 15,
         padding: 15,
         paddingTop: 5,
         backgroundColor: '#fff'
