@@ -61,7 +61,7 @@ export default function Transcript() {
     return (
         isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
             <ScrollView>
-                <View style={{ alignItems: "center", flex: 1 }}>
+                <View style={{ alignItems: "center", flex: 1, backgroundColor: '#eaeaea'}}>
                     <View style={styles.personal_info}>
                         <Text style={styles.title}>Personal Info</Text>
                         <Text style={styles.body}>{transcript.personalInfo.name}</Text>
@@ -69,33 +69,33 @@ export default function Transcript() {
                         <Text style={styles.body}>{transcript.personalInfo.residencyDescription}</Text>
                     </View>
                     <View style={styles.separator} />
-                    <View style={{ alignItems: "center" }}>
+                    <View style={{ alignItems: "center", backgroundColor: '#eaeaea'}}>
                         <Text style={styles.title}>{transcript.records.undergraduate.careerDescription} Record</Text>
                         {major_list(transcript.records.undergraduate.programs)}
                     </View>
                     <View style={styles.gpa}>
                         <View style={styles.columns}>
-                            <Text>Cumulative GPA:</Text>
+                            <Text style={{fontWeight: 'bold'}}>Cumulative GPA:</Text>
                             <Text>{transcript.records.undergraduate.ufGpa}{"\n"}</Text>
 
-                            <Text>Total Hours:</Text>
+                            <Text style={{fontWeight: 'bold'}}>Total Hours:</Text>
                             <Text>{transcript.records.undergraduate.totalHoursEarned}{"\n"}</Text>
 
-                            <Text>UF Hours Carried:</Text>
+                            <Text style={{fontWeight: 'bold'}}>UF Hours Carried:</Text>
                             <Text>{transcript.records.undergraduate.ufHoursCarried}</Text>
                         </View>
                         <View style={styles.columns}>
-                            <Text>Cumulative Grade Points:</Text>
+                            <Text style={{fontWeight: 'bold'}}>Cumulative Grade Points:</Text>
                             <Text>{transcript.records.undergraduate.gradePointsEarned}{"\n"}</Text>
 
-                            <Text>UF Cumulative Hours:</Text>
+                            <Text style={{fontWeight: 'bold'}}>UF Cumulative Hours:</Text>
                             <Text>{transcript.records.undergraduate.ufHoursEarned}{"\n"}</Text>
 
-                            <Text>Transfer Hours:</Text>
+                            <Text style={{fontWeight: 'bold'}}>Transfer Hours:</Text>
                             <Text>{transcript.records.undergraduate.transferHoursEarned}</Text>
                         </View>
                     </View>
-                    <View>
+                    <View style={{width: '100%', alignItems: 'center', backgroundColor: '#eaeaea'}}>
                         {class_list(transcript.records.undergraduate.terms)}
                     </View>
                 </View>
@@ -107,7 +107,7 @@ function major_list(programs: any) {
     return (
         programs.map((program: any, key: any) => {
             return (
-                <View>
+                <View style= {{backgroundColor: '#eaeaea'}}>
                     <Text style={styles.body}>{program.college}</Text>
                     {program.plans.map((plan: any, key1: any) => {
                         return (
@@ -151,23 +151,35 @@ function Term(props: any) {
                     pressed ? 
                     //Expanded semester view
                     
-                    <View style={{width: '75%', borderWidth: 2}}>
+                    <View style={{width: '100%', paddingTop: 8}}>
                         <View style={{flexDirection: 'row'}}>
                             <View style={{flex: 1}}>
-                                <Text style={{fontWeight: 'bold'}}>{source.sourceDescription}</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 15}}>{source.sourceDescription}</Text>
                             </View>
                             <View style={{flex: 1}}>
-                                <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{source.totalHoursEarned}</Text>
+                                <Text style={{textAlign: 'right', fontWeight: 'bold', fontSize: 15}}>{source.totalHoursEarned}</Text>
+                            </View>
+                        </View>
+
+                        <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+                            <View style={{flex: 1}}>
+                                <Text style={{fontWeight: 'bold', paddingLeft: 20}}>Course #</Text>
+                            </View>
+                            <View style={{flex: 1}}>
+                                <Text style={{textAlign: 'right', fontWeight: 'bold'}}>Grade</Text>
+                            </View>
+                            <View style={{flex: 1}}>
+                                <Text style={{textAlign: 'right', fontWeight: 'bold'}}>Hours</Text>
                             </View>
                         </View>
 
                         {source.sessions[0].courses.map((course: any, key2: any) => {
                             return(
                                 <View style={{flexDirection: 'row',
-                                              justifyContent: 'space-around'}}>
-                                    <Text style={{}}>{course.subject}{course.catalogNumber}</Text>
-                                    <Text style={{}}>{course.grade == 0 ? "-" : course.grade}</Text>
-                                    <Text style={{}}>{course.hoursEarned}</Text>
+                                              justifyContent: "space-between"}}>
+                                    <Text style={{paddingLeft: 20}}>{course.subject}{course.catalogNumber}</Text>
+                                    <Text style={{textAlign: 'left'}}>{course.grade == 0 ? "-" : course.grade}</Text>
+                                    <Text style={{textAlign: 'right'}}>{course.hoursEarned}</Text>
                                 </View>
                             )
                         })}
@@ -177,10 +189,10 @@ function Term(props: any) {
                     //Compressed semester view
                     <View style={{flexDirection: 'row'}}>
                         <View style={{flex: 1}}>
-                            <Text style={{fontWeight: 'bold'}}>{source.sourceDescription}</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 15}}>{source.sourceDescription}</Text>
                         </View>
                         <View style={{flex: 1}}>
-                            <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{source.totalHoursEarned}</Text>
+                            <Text style={{textAlign: 'right', fontWeight: 'bold', fontSize: 15}}>{source.totalHoursEarned}</Text>
                         </View>
                     </View>
                     
@@ -244,10 +256,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 15,
         paddingTop: 5,
+        backgroundColor: '#fff'
     },
     class_text: {
         textAlign: 'left',
-        fontSize: 17,
+        fontSize: 20,
     },
     semesterSummary: {
         justifyContent: "flex-start",
