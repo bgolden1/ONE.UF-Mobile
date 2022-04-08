@@ -68,9 +68,9 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
       
         <View style={styles.container}>
-          <View style={styles.box}>
+          <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>
             <Text style={styles.title}>Action Items</Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.box}>
             <View>
               <Text style={styles.title}>Unofficial Transcript</Text>
