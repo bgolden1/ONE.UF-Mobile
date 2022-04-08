@@ -3,6 +3,7 @@ import axios from 'axios';
 import { StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Text, View } from '../components/Themed';
+import Sandbox from '../components/Sandbox';
 
 export default function Transcript() {
     const [transcript, setTranscript] = useState({
@@ -47,7 +48,7 @@ export default function Transcript() {
     useEffect(() => {
         const url = "http://34.136.6.158:5000/api/unofficialtranscript"
         const headers = {
-            'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_CHARLES_',
+            'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_SHAUN_',
             'X-Host-Choice': 'mock-host'
         }
         axios.get(url, { headers: headers }).then((res) => {
@@ -144,19 +145,46 @@ function Term(props: any) {
     return (
         <TouchableOpacity style={styles.classes} onPress={onPress}>
             <Text style={styles.class_text} key={key}>{term.termDescription}</Text>
+
             {term.creditSources.map((source: any, key1: any) => {
                 return (
                     pressed ? 
-                    <View>
-                        <Text style={{ paddingLeft: "5%" }}>{source.sourceDescription}{"\t"}GPA: {source.currentGpa}{"\t"}Hours: {source.totalHoursEarned}</Text>
+                    //Expanded semester view
+                    
+                    <View style={{width: '75%', borderWidth: 2}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={{flex: 1}}>
+                                <Text style={{fontWeight: 'bold'}}>{source.sourceDescription}</Text>
+                            </View>
+                            <View style={{flex: 1}}>
+                                <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{source.totalHoursEarned}</Text>
+                            </View>
+                        </View>
+
                         {source.sessions[0].courses.map((course: any, key2: any) => {
                             return(
-                                <Text>{course.subject}{course.catalogNumber}{"\t"}{course.title}{"\t"}{course.grade == 0 ? "-" : course.grade}{"\t"}{course.hoursEarned}</Text>
+                                <View style={{flexDirection: 'row',
+                                              justifyContent: 'space-around'}}>
+                                    <Text style={{}}>{course.subject}{course.catalogNumber}</Text>
+                                    <Text style={{}}>{course.grade == 0 ? "-" : course.grade}</Text>
+                                    <Text style={{}}>{course.hoursEarned}</Text>
+                                </View>
                             )
                         })}
+
                     </View> 
                     : 
-                    <Text style={{ paddingLeft: "5%" }}>{source.sourceDescription}{"\t"}GPA: {source.currentGpa}{"\t"}Hours: {source.totalHoursEarned}</Text>
+                    //Compressed semester view
+                    <View style={{flexDirection: 'row'}}>
+                        <View style={{flex: 1}}>
+                            <Text style={{fontWeight: 'bold'}}>{source.sourceDescription}</Text>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{source.totalHoursEarned}</Text>
+                        </View>
+                    </View>
+                    
+                    
                 )
             })}
         </TouchableOpacity>
@@ -207,7 +235,8 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     classes: {
-        justifyContent: "flex-start",
+        width: '75%',
+        justifyContent: "center",
         alignItems: "flex-start",
         borderWidth: 2,
         borderColor: "#285697",
@@ -219,5 +248,17 @@ const styles = StyleSheet.create({
     class_text: {
         textAlign: 'left',
         fontSize: 17,
+    },
+    semesterSummary: {
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexDirection: "row",
+        width: '100%'
+    },
+    source:{
+        
+    },
+    hours: {
+        textAlign: 'right'
     }
 });
