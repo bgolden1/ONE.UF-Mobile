@@ -153,7 +153,7 @@ function Term(props: any) {
                     
                     <View style={{width: '100%', paddingTop: 8}}>
                         <View style={{flexDirection: 'row'}}>
-                            <View style={{flex: 1}}>
+                            <View style={{flex: 3}}>
                                 <Text style={{fontWeight: 'bold', fontSize: 15}}>{source.sourceDescription}</Text>
                             </View>
                             <View style={{flex: 1}}>
@@ -161,7 +161,7 @@ function Term(props: any) {
                             </View>
                         </View>
 
-                        <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+                        <View style={{flexDirection: 'row', justifyContent: "space-between", paddingTop: 3}}>
                             <View style={{flex: 1}}>
                                 <Text style={{fontWeight: 'bold', paddingLeft: 20}}>Course #</Text>
                             </View>
@@ -177,9 +177,9 @@ function Term(props: any) {
                             return(
                                 <View style={{flexDirection: 'row',
                                               justifyContent: "space-between"}}>
-                                    <Text style={{paddingLeft: 20}}>{course.subject}{course.catalogNumber}</Text>
-                                    <Text style={{textAlign: 'left'}}>{course.grade == 0 ? "-" : course.grade}</Text>
-                                    <Text style={{textAlign: 'right'}}>{course.hoursEarned}</Text>
+                                    <Text style={{width: "40%", paddingLeft: 20}}>{course.subject}{course.catalogNumber}</Text>
+                                    <Text style={{width: "40%", textAlign: 'center'}}>{course.grade == 0 ? "-" : course.grade}</Text>
+                                    <Text style={{width: "27%", textAlign: 'center'}}>{course.hoursEarned}</Text>
                                 </View>
                             )
                         })}
@@ -188,7 +188,7 @@ function Term(props: any) {
                     : 
                     //Compressed semester view
                     <View style={{flexDirection: 'row'}}>
-                        <View style={{flex: 1}}>
+                        <View style={{flex: 3}}>
                             <Text style={{fontWeight: 'bold', fontSize: 15}}>{source.sourceDescription}</Text>
                         </View>
                         <View style={{flex: 1}}>
