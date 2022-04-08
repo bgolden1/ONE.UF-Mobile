@@ -1,115 +1,108 @@
-import { StyleSheet, FlatList, Button } from 'react-native';
+import { StyleSheet, ScrollView, Button, ActivityIndicator, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { RootTabScreenProps } from '../types';
 
-import { Text, View } from '../components/Themed';
-import DropDown from '../components/DropDown';
-import { Courses } from '../components/Course';
+import { Text, View, useThemeColor } from '../components/Themed';
 
-export default function Schedule() {
+export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
+  const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState({
-    'categories': [],
-    'departments': [],
-    'progLevels': [],
-    'terms': []
+  const [user, setUser] = useState({
+    name: "",
+    legalName: "",
+    ufid: "",
+    apps: [],
+    email: "",
+    switchUser: false
   });
-  const [category, setCategory] = useState([]);
-  const [department, setDepartment] = useState([]);
-  const [term, setTerm] = useState([]);
-  const [progLevel, setProgLevel] = useState([]);
-  const [isSearching, setSearching] = useState(true)
-  const [results, setResults] = useState({
-    'COURSES': [],
-    'LASTCONTROLNUMBER': 0,
-    "RETRIEVEDROWS": 0,
-    "TOTALROWS": 0,
-  })
 
   useEffect(() => {
-    axios.get("https://one.uf.edu/apix/soc/filters").then((res) => {
-      console.log(res);
-      setData(res.data);
+    const url = "http://34.136.6.158:5000/api/";
+    const headers = {
+      'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_CHARLES_',
+      'X-Host-Choice': 'mock-host'
+    }
+    axios.get(url + "user", { headers: headers }).then((res) => {
+      setUser(res.data);
       setLoading(false);
-    }).catch((error) => {
-      console.log(error);
+    }).catch((err) => {
+      console.log(err);
     })
-  }, []);
-
-  function search() {
-    var url = "https://one.uf.edu/apix/soc/schedule?"
-    url = url + "ai=false&auf=false&category=" + category + "&class-num=&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&dept=" + department;
-    url = url + "&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=&level-min=&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=" + progLevel;
-    url = url + "&qst-1=&qst-2=&qst-3=&quest=false&term=" + term + "&wr-2000=&wr-4000=&wr-6000=&writing=false&var-cred=&hons=false";
-    axios.get(url).then((res) => {
-      console.log(res);
-      setResults(res.data[0])
-      setSearching(false);
-    }).catch((error) => {
-      console.log(error);
-
-    });
-  }
-
-  function returnToSearch() {
-    setSearching(true);
-  }
+    
+  }, [])
   return (
-    <View style={styles.container}>
-      {isLoading ? <View style={styles.container}><Text style={styles.title}>Loading</Text></View> :
-        <View style={styles.container}>
-          {isSearching ?
-            <View style={{ flexDirection: "column", paddingBottom: 50, paddingTop: 100 }}>
-              <View style={styles.container}>
-                <Text style={styles.title}>Categories:</Text>
-                <DropDown selectedValue={category} setSelectedValue={setCategory} items={data['categories']} />
-              </View>
-              <View style={styles.container}>
-                <Text style={styles.title}>Departments:</Text>
-                <DropDown selectedValue={department} setSelectedValue={setDepartment} items={data['departments']} />
-              </View>
+    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+      <ScrollView >
+        <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60 }}>
+          <Button title="Go to schedule of courses >" onPress={() => {
+            navigation.navigate("SOC")
+          }} />
+          <View style={styles.separator} />
 
-
-              <View style={styles.container}>
-                <Text style={styles.title}>Program Levels:</Text>
-                <DropDown selectedValue={progLevel} setSelectedValue={setProgLevel} items={data['progLevels']} />
-              </View>
-              <View style={styles.container}>
-                <Text style={styles.title}>Terms:</Text>
-                <DropDown selectedValue={term} setSelectedValue={setTerm} items={data['terms']} />
-              </View>
-              <Button title='Search' onPress={search} />
-            </View> :
-            <View style={styles.container}>
-              <Courses courses={results['COURSES']} />
-              <View style={{position: 'absolute',left: '0%', top: '10%'}}>
-              <Button title="<Return to Search" onPress={returnToSearch}/>
-              </View>
-            </View>
-          }
-
+          <View style={styles.personal_info}>
+            <Text style={styles.title}>{user.name}</Text>
+          </View>
 
         </View>
 
-      }
-    </View>
-  );
+      </ScrollView>
+
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    height: 120
+  personal_info: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: "#285697",
+    marginTop: 1,
+    borderRadius: 15,
+    paddingBottom: 1,
+    paddingTop: 1,
+    width: '90%'
   },
+
   title: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 'bold',
+    alignSelf: 'center'
   },
   separator: {
     marginVertical: 30,
-    height: 1,
     width: '80%',
+    color: '#285697',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
   },
+  body: {
+    textAlign: 'center',
+    fontSize: 17,
+  },
+
+  subsection: {
+    alignSelf: 'center',
+    width: '90%',
+    borderColor: 'grey',
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 5,
+    paddingBottom: 15,
+  },
+  section: {
+    alignSelf: 'center',
+    width: '90%',
+    borderColor: '#285697',
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 5,
+    paddingBottom: 15,
+    alignItems: 'center'
+  }
+
 });

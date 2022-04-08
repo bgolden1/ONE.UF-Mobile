@@ -16,8 +16,14 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Schedule from '../screens/Schedule';
 import Finances from '../screens/Finances';
+import Calendar from '../screens/Calendar';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import Transcript from '../screens/Transcript';
+import ActionItems from '../screens/ActionItems';
+import SOC from '../screens/SOC';
+
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -40,6 +46,10 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="Transcript" component={Transcript} options={{title: 'Unofficial Transcript', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="Calendar" component={Calendar} options={{title: 'Academic Calendar', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="ActionItems" component={ActionItems} options={{title: 'Action Items', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="SOC" component={SOC} options={{title: 'Schedule of Courses', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
   );
 }
@@ -62,7 +72,7 @@ function BottomTabNavigator() {
         tabBarInactiveBackgroundColor: '#285697',
         headerBackgroundContainerStyle: {backgroundColor: '#285697'},
         headerTransparent: true,
-        headerTitleStyle: {fontSize: 36}
+        headerTitleStyle: {fontSize: 36, color: '#f2f2f2'}
       }}>
       <BottomTab.Screen
         name="Schedule"
