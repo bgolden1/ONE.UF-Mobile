@@ -72,7 +72,7 @@ function BottomTabNavigator() {
         tabBarInactiveBackgroundColor: '#285697',
         headerBackgroundContainerStyle: {backgroundColor: '#285697'},
         headerTransparent: true,
-        headerTitleStyle: {fontSize: 36}
+        headerTitleStyle: {fontSize: 36, color: '#f2f2f2'}
       }}>
       <BottomTab.Screen
         name="Schedule"
