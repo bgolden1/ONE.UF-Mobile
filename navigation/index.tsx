@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, StyleSheet } from 'react-native';
+import { Button, ColorSchemeName, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -22,6 +22,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import Transcript from '../screens/Transcript';
 import ActionItems from '../screens/ActionItems';
 import SOC from '../screens/SOC';
+import ChooseUser from '../screens/DevChooseUser';
 
 
 
@@ -50,6 +51,7 @@ function RootNavigator() {
       <Stack.Screen name="Calendar" component={Calendar} options={{title: 'Academic Calendar', headerTitleStyle: {fontSize: 25}}}/>
       <Stack.Screen name="ActionItems" component={ActionItems} options={{title: 'Action Items', headerTitleStyle: {fontSize: 25}}}/>
       <Stack.Screen name="SOC" component={SOC} options={{title: 'Schedule of Courses', headerTitleStyle: {fontSize: 25}}}/>
+      <Stack.Screen name="ChooseUser" component={ChooseUser} options={{title: 'Choose User', headerTitleStyle: {fontSize: 25}}}/>
     </Stack.Navigator>
   );
 }
@@ -89,7 +91,11 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={'#ddd'} />,
-          tabBarShowLabel: false
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("ChooseUser")}>
+                <FontAwesome name='info-circle' size={25} style={{marginRight: 15}}/>
+            </TouchableOpacity>
+          )
         })}
       />
       <BottomTab.Screen
