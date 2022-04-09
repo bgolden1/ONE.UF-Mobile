@@ -81,7 +81,8 @@ function BottomTabNavigator() {
         component={Schedule}
         options={{
           title: 'Schedule',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={color} />,
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={'#ddd'} />,
+          tabBarShowLabel: false
         }}
       />
       <BottomTab.Screen
@@ -89,7 +90,7 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={'#ddd'} />,
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("ChooseUser")}>
                 <FontAwesome name='info-circle' size={25} style={{marginRight: 15}}/>
@@ -102,7 +103,8 @@ function BottomTabNavigator() {
         component={Finances}
         options={{
           title: 'Finances',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="money" color={color} />,
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="money" color={'#ddd'} />,
+          tabBarShowLabel: false
         }}
       />
     </BottomTab.Navigator>
