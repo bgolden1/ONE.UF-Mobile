@@ -42,7 +42,7 @@ export default function ActionItems() {
     return (
         isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
             <ScrollView>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#eaeaea'}}>
                     <Text style={styles.title}>{"\n"}Holds:</Text>
                     {holds.groups.length > 0 ? holds.groups.map((hold_type: any, key: any) => {
                         return (
@@ -80,11 +80,11 @@ export default function ActionItems() {
 
                             <View style={styles.section}>
 
-                                <Text style={styles.body}>{todo_type.label}</Text>
+                                <Text style={styles.body}>{todo_type.category}</Text>
 
-                                {todo_type.todos.map((hold: any, key2: any) => {
+                                {todo_type.detail.map((hold: any, key2: any) => {
                                     return (
-                                        <DisplayData data={hold} />
+                                        <DisplayTodo data={hold} />
                                     );
                                 })}
 
@@ -92,7 +92,7 @@ export default function ActionItems() {
 
                         );
                     }) :
-                    <Text style={styles.body}>You currently do not have any todo items</Text>}
+                    <Text style={{textAlign: 'center', fontSize: 18, marginBottom: 30}}>You currently do not have any todo items</Text>}
 
                 </View>
 
@@ -116,8 +116,28 @@ function DisplayData(props: any) {
         <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
             <Text style={[styles.body]}>{data.label}</Text>
             {pressed &&
-                <View>
+                <View style={{backgroundColor: '#ddd'}}>
                     <RenderHtml contentWidth={width} source={details} />
+                </View>
+            }
+
+        </TouchableOpacity>
+    )
+}
+
+function DisplayTodo(props: any) {
+    const [pressed, press] = useState(false);
+    const data = props.data;
+    const { width } = useWindowDimensions()
+    const details = {
+        html: data.description
+    }
+    return (
+        <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
+            <Text style={[styles.body]}>{data.title}</Text>
+            {pressed &&
+                <View style={{backgroundColor: '#ddd'}}>
+                    <RenderHtml  contentWidth={width} source={details} />
                 </View>
             }
 
@@ -143,7 +163,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
         alignSelf: 'center'
     },
@@ -156,30 +176,29 @@ const styles = StyleSheet.create({
     },
     body: {
         textAlign: 'center',
-        fontSize: 17,
+        fontSize: 18,
     },
 
     subsection: {
         alignSelf: 'center',
         width: '90%',
         borderColor: 'grey',
-        borderWidth: 2,
-        borderRadius: 15,
+        borderWidth: 1,
+        borderRadius: 6,
         marginTop: 10,
         marginBottom: 10,
-        padding: 5,
-        paddingBottom: 15,
+        padding: 10,
+        backgroundColor: '#ddd'
     },
     section: {
         alignSelf: 'center',
         width: '90%',
-        borderColor: '#285697',
+        borderColor: '#a6a6a6',
         borderWidth: 2,
-        borderRadius: 15,
+        borderRadius: 6,
         marginTop: 10,
         marginBottom: 10,
-        padding: 5,
-        paddingBottom: 15,
-        alignItems: 'center'
+        padding: 15,
+        alignItems: 'center',
     }
 });

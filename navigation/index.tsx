@@ -79,7 +79,8 @@ function BottomTabNavigator() {
         component={Schedule}
         options={{
           title: 'Schedule',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={color} />,
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="calendar" color={'#ddd'} />,
+          tabBarShowLabel: false
         }}
       />
       <BottomTab.Screen
@@ -87,7 +88,8 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={color} />
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={'#ddd'} />,
+          tabBarShowLabel: false
         })}
       />
       <BottomTab.Screen
@@ -95,7 +97,8 @@ function BottomTabNavigator() {
         component={Finances}
         options={{
           title: 'Finances',
-          tabBarIcon: ({ color }: any) => <TabBarIcon name="money" color={color} />,
+          tabBarIcon: ({ color }: any) => <TabBarIcon name="money" color={'#ddd'} />,
+          tabBarShowLabel: false
         }}
       />
     </BottomTab.Navigator>

@@ -88,19 +88,14 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
 
                 <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60, backgroundColor: '#eaeaea'}}>
 
-                    <View style={styles.separator} />
-
                     <View style={styles.personal_info}>
                         <Text style={styles.title}>{user.name}</Text>
-                        <Text style={styles.title}></Text>
-                        <Text style={styles.body}>Account Balance</Text>
-                        <Text style={styles.title}></Text>
-                        <Text style={styles.boldingprice}>${accountBalance}</Text>
-
+                        <Text style={{fontSize: 17}}>Account Balance</Text>
+                        <Text style={{fontSize: 14, fontWeight: 'bold', margin: 10}}>${accountBalance}</Text>
                     </View>
 
                     <TouchableOpacity onPress={() => { WebBrowser.openBrowserAsync(paymentLink.url) }} style={styles.bluebutton}>
-                        <View style={{ backgroundColor: '#285697' }}>
+                        <View style={{backgroundColor: '#aaa'}}>
                             <Text style={styles.title}>{paymentLink.title}</Text>
                         </View>
                     </TouchableOpacity>
@@ -143,27 +138,26 @@ function Charges(props: any) {
     return (
         <TouchableOpacity onPress={() => press(!pressed)} style={styles.section}>
             <Text style={styles.title}>Charges Due</Text>
-            <Text style={{ textDecorationLine: "underline" }}>{now_name}: ${now_value}</Text>
+            <Text style={{fontSize: 18}}>{now_name}: ${now_value}</Text>
             {now_value != 0 && pressed &&
                 now_data.map((entry: any, key: any) => {
                     return (
                         <View style={styles.subsection} key={key}>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.term}</Text>
-                            <Text style={{ textAlign: 'center' }}>{entry.description}: ${entry.amount}</Text>
-                            <Text style={{ textAlign: 'center' }}>Due: {entry.dueDate}</Text>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{entry.term}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15 }}>{entry.description}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>Due: {entry.dueDate}</Text>
                         </View>
                     )
-
                 })
             }
-            <Text style={{ textDecorationLine: "underline" }}>{later_name}: ${later_value}</Text>
+            <Text style={{fontSize: 18}}>{later_name}: ${later_value}</Text>
             {later_value != 0 && pressed &&
                 later_data.map((entry: any, key: any) => {
                     return (
                         <View style={styles.subsection} key={key}>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.term}</Text>
-                            <Text style={{ textAlign: 'center' }}>{entry.description}: ${entry.amount}</Text>
-                            <Text style={{ textAlign: 'center' }}>Due: {entry.dueDate}</Text>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>{entry.term}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>{entry.description}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>Due: {entry.dueDate}</Text>
                         </View>
                     )
 
@@ -185,14 +179,14 @@ function Refunds(props: any) {
                 if (entry.transactionType == 'Refund') {
                     return(
                         <View style={styles.subsection} key={key}>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.termDescription}</Text>
-                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
-                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>{entry.termDescription}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>Posted: {entry.postedDate}</Text>
                         </View>
                     )
                 }
             }) :
-            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No refunds found </Text>)
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>No refunds found </Text>)
             } 
         </TouchableOpacity>
     )
@@ -209,12 +203,12 @@ function PaymentHistory(props: any) {
             data.map((entry: any, key: any) => {
                 return(
                         <View style={styles.subsection} key={key}>
-                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
-                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>Posted: {entry.postedDate}</Text>
                         </View>
                     )
             }) :
-            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No payments found </Text>)
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>No payments found </Text>)
             } 
         </TouchableOpacity>
     )
@@ -231,13 +225,13 @@ function AccountActivity(props: any) {
             data.map((entry: any, key: any) => {
                     return(
                         <View style={styles.subsection} key={key}>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{entry.termDescription}</Text>
-                            <Text style={{ textAlign: 'center' }}>{entry.itemDescription}: ${entry.amount}</Text>
-                            <Text style={{ textAlign: 'center' }}>Posted: {entry.postedDate}</Text>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>{entry.termDescription}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>{entry.itemDescription}: ${entry.amount}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15  }}>Posted: {entry.postedDate}</Text>
                         </View>
                     )
             }) :
-            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>No refunds found </Text>)
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15  }}>No refunds found </Text>)
             } 
         </TouchableOpacity>
     )
@@ -247,9 +241,9 @@ const styles = StyleSheet.create({
     personal_info: {
         justifyContent: "flex-start",
         alignItems: "center",
-        marginTop: 1,
+        marginTop: 40,
+        marginBottom: 10,
         paddingBottom: 1,
-        paddingTop: 1,
         width: '90%',
         borderWidth: 1,
         borderColor: '#a6a6a6',
@@ -272,9 +266,9 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     title: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
-        alignSelf: 'center'
+        margin: 10
     },
     separator: {
         marginVertical: 30,
@@ -290,11 +284,10 @@ const styles = StyleSheet.create({
 
     bluebutton: {
         top: 10,
-        backgroundColor: '#285697',
+        backgroundColor: '#aaa',
         width: "70%",
-        height: 50,
-        borderColor: '#285697',
-        borderWidth: 3,
+        borderColor: '#555',
+        borderWidth: 2,
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginBottom: 15,
@@ -320,8 +313,6 @@ const styles = StyleSheet.create({
     section: {
         alignSelf: 'center',
         width: '90%',
-        marginTop: 10,
-        marginBottom: 10,
         padding: 5,
         paddingBottom: 15,
         alignItems: 'center',
