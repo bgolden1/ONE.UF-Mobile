@@ -2,6 +2,7 @@ import { StyleSheet, ScrollView, Button, ActivityIndicator, TextInput, KeyboardA
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { RootTabScreenProps } from '../types';
+import {TouchableOpacity} from 'react-native';
 
 import { Text, View, useThemeColor } from '../components/Themed';
 
@@ -153,8 +154,10 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
 
 
 
-
-
+  const [pressed, press] = useState(false);
+        function onPress() {
+          press(!pressed)
+      }
 
 
   useEffect(() => {
@@ -184,63 +187,151 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
             <Text style={styles.title}>{user.name}</Text>
           </View>
 
-
-
           <View style={styles.separator} />
 
-
           {schedule.sections.map((object: any, key: any) => {
+            
                             return (
                                 
-                                
-                              <View style={styles.section}>
-                              <><><Text style={styles.title}>{object.code} : {object.name}</Text>
+                              <DisplayDataFour data={object} />
 
-                              <View style={styles.separator} /></>
-                              <View style={styles.asection}>
-                              <Text style={styles.boldbody}>Class Information</Text>
-                              <Text style={styles.body}>Class Number: {object.classNumber}{"\n"}Course ID: {object.courseID}
-                                {"\n"}Note: {object.note}
-                                {"\n"}Department Code: {object.deptCode}{"\n"}Department Name: {object.deptName}{"\n"}Final Exam: {object.finalExam}
-                                {"\n"}Instructor(s): {object.instructors}</Text>
-                              </View>
-                                
-                                {object.meetTimes.map((object2: any, key2: any) => {
-                            return ( 
-                              <View style={styles.asection}>
-                              <Text style={styles.boldbody}>Meet Day Information</Text>
-                              <Text style={styles.body}>Meet Number: {object2.meetNo}{"\n"}Meet Days: {object2.meetDays}
-                              {"\n"}Meet Time Begin: {object2.meetTimeBegin}{"\n"}Meet Time End: {object2.meetTimeEnd}
-                              {"\n"}Meet Building: {object2.meetBuilding}{"\n"}Meet Building Code: {object2.meetBldgCode}
-                              {"\n"}Meet Room: {object2.meetRoom}</Text>
-                              </View>
-                            ); 
-                            })}
-                                <View style={styles.asection}>
-                                <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
-                                <Text style={styles.body}>Droppable: {object.droppable}
-                                {"\n"}Start Date: {object.startDate}
-                                {"\n"}End Date: {object.endDate}{"\n"}Credits: {object.credits}{"\n"}Remark: {object.remark}
-                                {"\n"}Past Deadline: {object.pastDeadline}{"\n"}Enrollment Status: {object.enrollmentStatus}
-                                {"\n"}Grading Basis: {object.gradingBasis}
-                                {"\n"}Grading Basis Description: {object.gradingBasisDescription}{"\n"}Wait Position: {object.waitPosition}
-                                {"\n"}Enroll From Wait: {object.enrollFromWait}</Text>
-                                </View></>
-                                
-                                
-                                
-                                </View>
 
                                 );
                             })}
+        
 
 
         </View>
+
 
       </ScrollView>
 
   )
 }
+
+
+
+
+function DisplayDataFour(props: any) {
+  const [pressed, press] = useState(false);
+  const data = props.data;
+  const details = {
+      html: data.details
+  }
+  return (
+      <TouchableOpacity onPress={() => press(!pressed)} style={styles.bsection}>
+          <Text style={[styles.body]}>{data.label}</Text>
+          {pressed ?
+            <View>
+            <><><Text style={styles.title}>{data.code} : {data.name}</Text>
+            </>
+            <DisplayDataTwo data={data} />
+                                            
+            {data.meetTimes.map((object2: any, key2: any) => {
+            return ( 
+            <DisplayData data={object2} />
+            ); 
+            })}
+              
+            <DisplayDataThree data={data} />
+            </>
+            </View>
+              :
+            <Text style={styles.title}>{data.code} : {data.name}</Text>
+          }
+
+      </TouchableOpacity>
+  )
+}
+
+
+
+
+
+
+function DisplayData(props: any) {
+  const [pressed, press] = useState(false);
+  const data = props.data;
+  const details = {
+      html: data.details
+  }
+  return (
+      <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
+          <Text style={[styles.body]}>{data.label}</Text>
+          {pressed ?
+              <View>
+              <Text style={styles.boldbody}>Meet Day Information</Text>
+              <Text style={styles.body}>Meet Days: {data.meetDays}
+              {"\n"}Meet Time Begin: {data.meetTimeBegin}{"\n"}Meet Time End: {data.meetTimeEnd}
+              {"\n"}Meet Building: {data.meetBuilding}{"\n"}Meet Building Code: {data.meetBldgCode}
+              {"\n"}Meet Room: {data.meetRoom}</Text>
+              </View>
+
+                  :
+              <Text style={styles.boldbody}>Meet Day Information</Text>
+          }
+
+      </TouchableOpacity>
+  )
+}
+
+function DisplayDataTwo(props: any) {
+  const [pressed, press] = useState(false);
+  const data = props.data;
+  const details = {
+      html: data.details
+  }
+  return (
+      <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
+          <Text style={[styles.body]}>{data.label}</Text>
+          {pressed ?
+              <View>
+              <Text style={styles.boldbody}>Class Information</Text>
+              <Text style={styles.body}>Class Number: {data.classNumber}{"\n"}Course ID: {data.courseID}
+              {"\n"}Note: {data.note}
+              {"\n"}Department Code: {data.deptCode}{"\n"}Department Name: {data.deptName}{"\n"}Final Exam: {data.finalExam}
+              {"\n"}Instructor(s): {data.instructors}</Text>
+              </View>
+          :
+              <Text style={styles.boldbody}>Class Information</Text>
+          }
+
+      </TouchableOpacity>
+  )
+}
+
+function DisplayDataThree(props: any) {
+  const [pressed, press] = useState(false);
+  const data = props.data;
+  const details = {
+      html: data.details
+  }
+  return (
+      <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
+          <Text style={[styles.body]}>{data.label}</Text>
+          {pressed ?
+              <View>
+              <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
+              <Text style={styles.body}>Droppable: {data.droppable}
+              {"\n"}Start Date: {data.startDate}
+              {"\n"}End Date: {data.endDate}{"\n"}Credits: {data.credits}{"\n"}Remark: {data.remark}
+              {"\n"}Past Deadline: {data.pastDeadline}{"\n"}Enrollment Status: {data.enrollmentStatus}
+              {"\n"}Grading Basis: {data.gradingBasisDescription}
+              {"\n"}Wait Position: {data.waitPosition}
+              {"\n"}Enroll From Wait: {data.enrollFromWait}</Text>
+              </View>
+              :
+              <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
+          }
+
+      </TouchableOpacity>
+  )
+}
+
+
+
+
+
 
 const styles = StyleSheet.create({
   personal_info: {
@@ -261,6 +352,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   separator: {
+    alignItems: "center",
     marginVertical: 30,
     width: '80%',
     color: '#285697',
@@ -316,6 +408,17 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingBottom: 15,
     alignItems: 'center'
+  },
+
+  bsection: {
+    alignSelf: 'center',
+    width: '90%',
+    borderColor: '#285697',
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 5,
   }
 
 });
