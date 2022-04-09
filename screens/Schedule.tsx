@@ -194,44 +194,46 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
                                 
                                 
                               <View style={styles.section}>
-                              <><><Text style={styles.body}>{"\n"}Class Number:{"\n"}{object.classNumber}{"\n"}Course ID:{"\n"}{object.courseID}
-                                {"\n"}Number:{"\n"}{object.number}{"\n"}Display:{"\n"}{object.display}{"\n"}Code:{"\n"}{object.code}
-                                {"\n"}Name:{"\n"}{object.name}{"\n"}Term Indicator:{"\n"}{object.termInd}{"\n"}Note:{"\n"}{object.note}
-                                {"\n"}General Eduation:{"\n"}{object.genEd}{"\n"}Section Web:{"\n"}{object.sectWeb}{"\n"}Rotate Title:{"\n"}{object.rotateTitle}
-                                {"\n"}Department Code:{"\n"}{object.deptCode}{"\n"}Department Name:{"\n"}{object.deptName}{"\n"}Final Exam:{"\n"}{object.finalExam}
-                                {"\n"}GR Writing:{"\n"}{object.grWriting}{"\n"}Course Fee:{"\n"}{object.courseFee}{"\n"}EEP:{"\n"}{object.EEP}
-                                {"\n"}Instructor(s):{"\n"}{object.instructors}</Text>
-                              
+                              <><><Text style={styles.title}>{object.code} : {object.name}</Text>
+
+                              <View style={styles.separator} /></>
+                              <View style={styles.asection}>
+                              <Text style={styles.boldbody}>Class Information</Text>
+                              <Text style={styles.body}>Class Number: {object.classNumber}{"\n"}Course ID: {object.courseID}
+                                {"\n"}Note: {object.note}
+                                {"\n"}Department Code: {object.deptCode}{"\n"}Department Name: {object.deptName}{"\n"}Final Exam: {object.finalExam}
+                                {"\n"}Instructor(s): {object.instructors}</Text>
+                              </View>
                                 
                                 {object.meetTimes.map((object2: any, key2: any) => {
                             return ( 
-                              <Text style={styles.body}>{"\n"}Meet Number:{"\n"}{object2.meetNo}{"\n"}Meet Days:{"\n"}{object2.meetDays}
-                              {"\n"}Meet Time Begin:{"\n"}{object2.meetTimeBegin}{"\n"}Meet Time End:{"\n"}{object2.meetTimeEnd}
-                              {"\n"}Meet Period Begin:{"\n"}{object2.meetPeriodBegin}{"\n"}Meet Period End:{"\n"}{object2.meetPeriodEnd}
-                              {"\n"}Meet Building:{"\n"}{object2.meetBuilding}{"\n"}Meet Building Code:{"\n"}{object2.meetBldgCode}
-                              {"\n"}Meet Room:{"\n"}{object2.meetRoom}</Text>
+                              <View style={styles.asection}>
+                              <Text style={styles.boldbody}>Meet Day Information</Text>
+                              <Text style={styles.body}>Meet Number: {object2.meetNo}{"\n"}Meet Days: {object2.meetDays}
+                              {"\n"}Meet Time Begin: {object2.meetTimeBegin}{"\n"}Meet Time End: {object2.meetTimeEnd}
+                              {"\n"}Meet Building: {object2.meetBuilding}{"\n"}Meet Building Code: {object2.meetBldgCode}
+                              {"\n"}Meet Room: {object2.meetRoom}</Text>
+                              </View>
                             ); 
                             })}
+                                <View style={styles.asection}>
+                                <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
+                                <Text style={styles.body}>Droppable: {object.droppable}
+                                {"\n"}Start Date: {object.startDate}
+                                {"\n"}End Date: {object.endDate}{"\n"}Credits: {object.credits}{"\n"}Remark: {object.remark}
+                                {"\n"}Past Deadline: {object.pastDeadline}{"\n"}Enrollment Status: {object.enrollmentStatus}
+                                {"\n"}Grading Basis: {object.gradingBasis}
+                                {"\n"}Grading Basis Description: {object.gradingBasisDescription}{"\n"}Wait Position: {object.waitPosition}
+                                {"\n"}Enroll From Wait: {object.enrollFromWait}</Text>
+                                </View></>
                                 
-                                <Text style={styles.body}>{"\n"}LMS:{"\n"}{object.LMS}{"\n"}Droppable:{"\n"}{object.droppable}
-                                {"\n"}Begin Date:{"\n"}{object.begin_date}{"\n"}End Date:{"\n"}{object.end_date}{"\n"}Start Date:{"\n"}{object.startDate}
-                                {"\n"}End Date:{"\n"}{object.endDate}{"\n"}Credits:{"\n"}{object.credits}{"\n"}Remark:{"\n"}{object.remark}
-                                {"\n"}Acad Career:{"\n"}{object.acadCareer}{"\n"}Acad Programming:{"\n"}{object.acadProg}
-                                {"\n"}Past Deadline:{"\n"}{object.pastDeadline}{"\n"}Enrollment Status:{"\n"}{object.enrollmentStatus}
-                                {"\n"}Number:{"\n"}{object.enrollmentStatusDescription}{"\n"}Grading Basis:{"\n"}{object.gradingBasis}
-                                {"\n"}Grading Basis Description:{"\n"}{object.gradingBasisDescription}{"\n"}Wait Position:{"\n"}{object.waitPosition}
-                                {"\n"}Enroll From Wait:{"\n"}{object.enrollFromWait}</Text></>
-
-                                <View style={styles.separator} /></>
+                                
                                 
                                 </View>
 
                                 );
                             })}
 
-          <View style={styles.personal_info}>
-            <Text style={styles.title}>{user.name}</Text>
-          </View>
 
         </View>
 
@@ -266,8 +268,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   body: {
-    textAlign: 'center',
+    textAlign: 'justify',
     fontSize: 17,
+  },
+
+  boldbody: {
+    textAlign: 'justify',
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+
+  asection: {
+    textAlign: 'left',
+    fontSize: 17,
+    alignSelf: 'center',
+    width: '90%',
+    borderColor: 'grey',
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 5,
+    paddingBottom: 15,
+
+
   },
 
   subsection: {
