@@ -17,6 +17,146 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
     switchUser: false
   });
 
+
+  const [schedule, setSchedule] = useState({
+      
+      credits: 6,
+      sections: [
+          {
+              classNumber: 11050,
+              courseId: "010871",
+              number: "0711",
+              display: "0711",
+              code: "CIS4914",
+              name: "Senior Project",
+              termInd: "",
+              note: [],
+              genEd: [],
+              sectWeb: "PC",
+              rotateTitle: "",
+              deptCode: "19140000",
+              deptName: "ENG(EG)-Comp/Info Sci & Eng",
+              finalExam: "",
+              grWriting: "N",
+              courseFee: 0,
+              EEP: "Y",
+              instructors: [
+                  "Mark Schmalz"
+              ],
+              meetTimes: [
+                  {
+                      meetNo: 1,
+                      meetDays: [],
+                      meetTimeBegin: "",
+                      meetTimeEnd: "",
+                      meetPeriodBegin: "",
+                      meetPeriodEnd: "",
+                      meetBuilding: "",
+                      meetBldgCode: "",
+                      meetRoom: ""
+                  }
+              ],
+              LMS: "",
+              droppable: "N",
+              begin_date: "2022-01-05",
+              end_date: "2022-04-20",
+              startDate: "01/05/2022",
+              endDate: "04/20/2022",
+              credits: 3,
+              remark: "",
+              acadCareer: "UGRD",
+              acadProg: "UGLAS",
+              pastDeadline: true,
+              enrollmentStatus: "E",
+              enrollmentStatusDescription: "Enrolled",
+              gradingBasis: "GRD",
+              gradingBasisDescription: "Letter Grade",
+              waitPosition: 0,
+              enrollFromWait: "N"
+          },
+          {
+              classNumber: 21105,
+              courseId: "018679",
+              number: "452A",
+              display: "452A",
+              code: "SYG2430",
+              name: "Marriage and Family",
+              termInd: "",
+              note: [],
+              genEd: [
+                  "Social Science",
+                  "Diversity"
+              ],
+              sectWeb: "PC",
+              rotateTitle: "",
+              deptCode: "16920500",
+              deptName: "LAS(LS)-Sociology",
+              finalExam: "4/25/2022 @ 10:00 AM - 12:00 PM",
+              grWriting: "N",
+              courseFee: 0,
+              EEP: "Y",
+              instructors: [
+                  "Reha Atakan Cetin"
+              ],
+              meetTimes: [
+                  {
+                      meetNo: 1,
+                      meetDays: [
+                          "T"
+                      ],
+                      meetTimeBegin: "8:30 AM",
+                      meetTimeEnd: "10:25 AM",
+                      meetPeriodBegin: "2",
+                      meetPeriodEnd: "3",
+                      meetBuilding: "TUR",
+                      meetBldgCode: "0267",
+                      meetRoom: "2303"
+                  },
+                  {
+                      meetNo: 2,
+                      meetDays: [
+                          "R"
+                      ],
+                      meetTimeBegin: "9:35 AM",
+                      meetTimeEnd: "10:25 AM",
+                      meetPeriodBegin: "3",
+                      meetPeriodEnd: "3",
+                      meetBuilding: "TUR",
+                      meetBldgCode: "0267",
+                      meetRoom: "2303"
+                  }
+              ],
+              LMS: "",
+              droppable: "N",
+              begin_date: "2022-01-05",
+              end_date: "2022-04-20",
+              startDate: "01/05/2022",
+              endDate: "04/20/2022",
+              credits: 3,
+              remark: "",
+              acadCareer: "UGRD",
+              acadProg: "UGLAS",
+              pastDeadline: true,
+              enrollmentStatus: "E",
+              enrollmentStatusDescription: "Enrolled",
+              gradingBasis: "GRD",
+              gradingBasisDescription: "Letter Grade",
+              waitPosition: 0,
+              enrollFromWait: "N"
+          }
+      ],
+      waitListSections: []
+  })
+
+
+
+
+
+
+
+
+
+
   useEffect(() => {
     const url = "http://34.136.6.158:5000/api/";
     const headers = {
@@ -30,7 +170,7 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
       console.log(err);
     })
     
-  }, [])
+  })
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
       <ScrollView >
@@ -43,6 +183,57 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
           <View style={styles.personal_info}>
             <Text style={styles.title}>{user.name}</Text>
           </View>
+
+
+
+          <View style={styles.separator} />
+
+
+          {schedule.sections.map((object: any, key: any) => {
+                            return (
+                                
+                                
+                              <View style={styles.section}>
+                              <><><Text style={styles.title}>{object.code} : {object.name}</Text>
+
+                              <View style={styles.separator} /></>
+                              <View style={styles.asection}>
+                              <Text style={styles.boldbody}>Class Information</Text>
+                              <Text style={styles.body}>Class Number: {object.classNumber}{"\n"}Course ID: {object.courseID}
+                                {"\n"}Note: {object.note}
+                                {"\n"}Department Code: {object.deptCode}{"\n"}Department Name: {object.deptName}{"\n"}Final Exam: {object.finalExam}
+                                {"\n"}Instructor(s): {object.instructors}</Text>
+                              </View>
+                                
+                                {object.meetTimes.map((object2: any, key2: any) => {
+                            return ( 
+                              <View style={styles.asection}>
+                              <Text style={styles.boldbody}>Meet Day Information</Text>
+                              <Text style={styles.body}>Meet Number: {object2.meetNo}{"\n"}Meet Days: {object2.meetDays}
+                              {"\n"}Meet Time Begin: {object2.meetTimeBegin}{"\n"}Meet Time End: {object2.meetTimeEnd}
+                              {"\n"}Meet Building: {object2.meetBuilding}{"\n"}Meet Building Code: {object2.meetBldgCode}
+                              {"\n"}Meet Room: {object2.meetRoom}</Text>
+                              </View>
+                            ); 
+                            })}
+                                <View style={styles.asection}>
+                                <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
+                                <Text style={styles.body}>Droppable: {object.droppable}
+                                {"\n"}Start Date: {object.startDate}
+                                {"\n"}End Date: {object.endDate}{"\n"}Credits: {object.credits}{"\n"}Remark: {object.remark}
+                                {"\n"}Past Deadline: {object.pastDeadline}{"\n"}Enrollment Status: {object.enrollmentStatus}
+                                {"\n"}Grading Basis: {object.gradingBasis}
+                                {"\n"}Grading Basis Description: {object.gradingBasisDescription}{"\n"}Wait Position: {object.waitPosition}
+                                {"\n"}Enroll From Wait: {object.enrollFromWait}</Text>
+                                </View></>
+                                
+                                
+                                
+                                </View>
+
+                                );
+                            })}
+
 
         </View>
 
@@ -77,8 +268,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   body: {
-    textAlign: 'center',
+    textAlign: 'justify',
     fontSize: 17,
+  },
+
+  boldbody: {
+    textAlign: 'justify',
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+
+  asection: {
+    textAlign: 'left',
+    fontSize: 17,
+    alignSelf: 'center',
+    width: '90%',
+    borderColor: 'grey',
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 5,
+    paddingBottom: 15,
+
+
   },
 
   subsection: {

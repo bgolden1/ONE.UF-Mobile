@@ -87,7 +87,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   );
   
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -126,4 +126,5 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center'
   }
+
 });
