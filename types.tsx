@@ -21,6 +21,7 @@ export type RootStackParamList = {
   ActionItems: undefined;
   SOC: undefined;
   Calendar: undefined;
+  ChooseUser: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

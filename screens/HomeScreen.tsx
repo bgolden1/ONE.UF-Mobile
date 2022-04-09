@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
 import axios from 'axios';
+
+declare global {
+  var person: string;
+}
+globalThis.person = 'CHARLES'
+
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   // Copied from transcripts page (alternative is to make smaller, more specified API calls)
@@ -53,7 +59,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   useEffect(() => {
     const url = "http://34.136.6.158:5000/api/unofficialtranscript"
     const headers = {
-        'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_CHARLES_',
+        'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + "_",
         'X-Host-Choice': 'mock-host'
     }
     axios.get(url, { headers: headers }).then((res) => {
