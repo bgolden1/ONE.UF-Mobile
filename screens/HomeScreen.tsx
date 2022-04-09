@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator, Button, LogBox } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
 import axios from 'axios';
+
+LogBox.ignoreAllLogs();
 
 declare global {
   var person: string;
