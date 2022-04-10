@@ -149,11 +149,6 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
       waitListSections: []
   })
 
-
-
-
-
-
   const [pressed, press] = useState(false);
         function onPress() {
           press(!pressed)
@@ -179,13 +174,19 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
     });
     
   })
+
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
       <ScrollView >
-        <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60 }}>
-          <Button title="Go to schedule of courses >" onPress={() => {
-            navigation.navigate("SOC")
-          }} />
+
+        <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60, backgroundColor: '#eaeaea' }}>
+
+          <View style={styles.button}>
+            <Button title="Go to schedule of courses >" onPress={() => {
+              navigation.navigate("SOC")
+            }} />
+          </View>
+          
           <View style={styles.separator} />
 
           <View style={styles.personal_info}>
@@ -195,26 +196,16 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
           <View style={styles.separator} />
 
           {schedule.sections.map((object: any, key: any) => {
-            
-                            return (
-                                
-                              <DisplayDataFour data={object} />
-
-
-                                );
-                            })}
-        
-
+            return (
+              <DisplayDataFour data={object} />
+            );
+          })}
 
         </View>
 
-
       </ScrollView>
-
   )
 }
-
-
 
 
 function DisplayDataFour(props: any) {
@@ -241,17 +232,13 @@ function DisplayDataFour(props: any) {
             <DisplayDataThree data={data} />
             </>
             </View>
-              :
+            :
             <Text style={styles.title}>{data.code} : {data.name}</Text>
           }
 
       </TouchableOpacity>
   )
 }
-
-
-
-
 
 
 function DisplayData(props: any) {
@@ -334,23 +321,16 @@ function DisplayDataThree(props: any) {
 }
 
 
-
-
-
-
 const styles = StyleSheet.create({
   personal_info: {
     justifyContent: "flex-start",
     alignItems: "center",
-    borderWidth: 3,
-    borderColor: "#285697",
-    marginTop: 1,
-    borderRadius: 15,
-    paddingBottom: 1,
-    paddingTop: 1,
-    width: '90%'
+    borderWidth: 1,
+    borderColor: "#a6a6a6",
+    borderRadius: 6,
+    width: '80%',
+    padding: 10
   },
-
   title: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -368,13 +348,11 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     fontSize: 17,
   },
-
   boldbody: {
     textAlign: 'justify',
     fontSize: 17,
     fontWeight: 'bold'
   },
-
   asection: {
     textAlign: 'left',
     fontSize: 17,
@@ -387,10 +365,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 5,
     paddingBottom: 15,
-
-
   },
-
   subsection: {
     alignSelf: 'center',
     width: '90%',
@@ -414,16 +389,16 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignItems: 'center'
   },
-
   bsection: {
     alignSelf: 'center',
     width: '90%',
-    borderColor: '#285697',
-    borderWidth: 2,
-    borderRadius: 15,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 5,
+    borderColor: '#a6a6a6',
+    borderWidth: 1,
+    borderRadius: 6,
+    backgroundColor: '#fff'
+  },
+  button: {
+    marginTop: 40
   }
 
 });
