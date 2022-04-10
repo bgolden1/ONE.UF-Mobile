@@ -91,6 +91,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }: any) => <TabBarIcon name="home" color={'#ddd'} />,
+          tabBarShowLabel: false,
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("ChooseUser")}>
                 <FontAwesome name='info-circle' size={25} style={{marginRight: 15}}/>
