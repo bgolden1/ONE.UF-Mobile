@@ -47,7 +47,7 @@ export default function Transcript() {
     useEffect(() => {
         const url = "http://34.136.6.158:5000/api/unofficialtranscript"
         const headers = {
-            'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_SHAUN_',
+            'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + '_',
             'X-Host-Choice': 'mock-host'
         }
         axios.get(url, { headers: headers }).then((res) => {
