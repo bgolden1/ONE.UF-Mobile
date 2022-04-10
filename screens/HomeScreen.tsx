@@ -63,12 +63,35 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
           <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.box}>
             <View>
               <Text style={styles.title}>Unofficial Transcript</Text>
+            </View>
+            <View style={styles.preview}>
               <Text> {grades.terms[0].termDesc} </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{flex: 3}}> Cumulative UF GPA: </Text>
+                <Text style={{flex: 1}}>{grades.terms[0].cumGpa} </Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{flex: 3}}> Term GPA: </Text>
+                <Text style={{flex: 1}}>{grades.terms[0].termGpa} </Text>
+              </View>
+
+              {/* <View style={styles.classes}>
+                {grades.terms[0].classes.map((class: any, key: any) => {
+                  return(
+                    <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+                      <Text style={{width: "40%", paddingLeft: 20}}>{class.course}{class.title}</Text>
+                      <Text style={{width: "40%", textAlign: 'center'}}>{class.grade == 0 ? "-" : class.grade}</Text>
+                    </View>
+                  )
+                })}
+              </View> */}
+
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Calendar")} style={styles.box}>
             <View>
               <Text style={styles.title}>Academic Calendar</Text>
+              
             </View>
           </TouchableOpacity>
         </View>
@@ -76,6 +99,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   );
   
 }
+
  
 const styles = StyleSheet.create({
   container: {
@@ -114,6 +138,27 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     alignSelf: 'center'
+  },
+  preview: {
+    marginTop: 8,
+    borderWidth: 1,
+    width: '60%'
+  },
+  class_text: {
+    textAlign: 'left',
+    fontSize: 20,
+  },
+  classes: {
+    width: '75%',
+    justifyContent: "center",
+    alignItems: "flex-start",
+    borderWidth: 1,
+    borderColor: '#a6a6a6',
+    borderRadius: 6,
+    marginTop: 15,
+    padding: 15,
+    paddingTop: 5,
+    backgroundColor: '#fff'
   }
 
 });
