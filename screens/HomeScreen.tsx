@@ -14,58 +14,39 @@ globalThis.person = 'CHARLES'
 
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
-  // Copied from transcripts page (alternative is to make smaller, more specified API calls)
-  const [transcript, setTranscript] = useState({
-    personalInfo: {
-        name: "",
-        ufid: 0,
-        residency: "",
-        residencyDescription: "",
-        basisOfAdmissionCode: "",
-        basisOfAdmissionDescription: "",
-        ssn: "",
-        dob: ""
-    },
-    records: {
-        undergraduate: {
-            comments: {
-                before: {
-                    2: {
-                        1: ""
-                    },
-                    3: {
-                        1: ""
-                    }
-                }
-            },
-            ufGpa: "",
-            totalHoursEarned: "",
-            gradePointsEarned: "",
-            ufHoursEarned: "",
-            ufHoursCarried: "",
-            transferHoursEarned: "",
-            terms: [{
-
-            }],
-            concentrations: "",
-            programs: [],
-            careerDescription: ""
-        }
+  
+  const [grades, setGrades] = useState(
+    {
+      terms: [{
+        termCode: "",
+        termDesc: "",
+        currentTerm: true,
+        holdFlag: false,
+        cumGpa: "",
+        termGpa: "",
+        comments: "",
+        classes: [{
+          course: "",
+          grade: "",
+          title: ""
+        }],
+        transcriptTextAfter: []
+      }]
     }
-  })
+  )
 
-  // Copied from transcripts page
+  
   const [isLoading, setLoading] = useState(true);
 
-  // Copied from transcripts page
+  
   useEffect(() => {
-    const url = "http://34.136.6.158:5000/api/unofficialtranscript"
+    const url = "http://34.136.6.158:5000/api/grades"
     const headers = {
         'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + "_",
         'X-Host-Choice': 'mock-host'
     }
     axios.get(url, { headers: headers }).then((res) => {
-        setTranscript(res.data);
+        setGrades(res.data);
         setLoading(false);
     }).catch((err) => {
         console.log(err);
@@ -82,7 +63,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
           <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.box}>
             <View>
               <Text style={styles.title}>Unofficial Transcript</Text>
-              <Text> {transcript.personalInfo.name} </Text>
+              <Text> {grades.terms[0].termDesc} </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Calendar")} style={styles.box}>
