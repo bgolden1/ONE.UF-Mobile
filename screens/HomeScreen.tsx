@@ -71,7 +71,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
         <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>
           <Text style={styles.title}>Action Items</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.box}>
+        <TouchableOpacity onPress={() => navigation.navigate("Transcript")} style={styles.transcriptBox}>
           <View>
             <Text style={styles.title}>Unofficial Transcript</Text>
           </View>
@@ -143,6 +143,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     width: "95%",
     minHeight: "20%",
+    borderColor: '#a6a6a6',
+    borderWidth: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 15,
+    borderRadius: 6
+  },
+  transcriptBox: {
+    top: 100,
+    backgroundColor: '#ffffff',
+    width: "95%",
+    paddingBottom: 15,
     borderColor: '#a6a6a6',
     borderWidth: 1,
     justifyContent: 'flex-start',
