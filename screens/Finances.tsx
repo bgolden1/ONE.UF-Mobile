@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { ScrollView, Button, ActivityIndicator, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
 
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
@@ -10,6 +11,7 @@ import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 
 export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
+    const isFocused = useIsFocused();
     const [accountBalance, setAccountBalance] = useState(8.31);
     const [chargesDue, setChargesDue] = useState({
         chargesDueLater: [],
@@ -88,11 +90,11 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
         return () => { 
             cancel = true;
         }
-    }, [globalThis.person])
+    }, [isFocused])
     return (
 
 
-        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><Text>LOADING</Text><ActivityIndicator size={'large'} color={'blue'} /></View> :
 
 
             <ScrollView >

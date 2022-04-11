@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { RootTabScreenProps } from '../types';
 import {TouchableOpacity} from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Text, View, useThemeColor } from '../components/Themed';
 
 export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
   const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
+  const isFocused = useIsFocused();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({
     name: "",
@@ -180,7 +182,7 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
     return () => { 
       cancel = true;
     }
-  }, [globalThis.person])
+  }, [isFocused])
 
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
