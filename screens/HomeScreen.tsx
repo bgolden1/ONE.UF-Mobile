@@ -67,7 +67,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 
   return (
       <View style={styles.container}>
-        <Text style={{fontSize: 30, top: 100, textAlign: 'center', fontFamily: "Times New Roman", marginBottom: 30}}>Welcome, {"\n"}{isLoading ?  <ActivityIndicator size={'large'} color={'blue'} /> : user.name}</Text>
+        <Text style={{fontSize: 30, top: 100, textAlign: 'center', fontFamily: "Times New Roman"}}>Welcome,</Text>
+        <Text style={{fontSize: 30, top: 100, textAlign: 'center', fontFamily: "Times New Roman", marginBottom: 30}}>{isLoading ?  <ActivityIndicator size={'large'} color={'blue'} /> : user.name}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>
           <Text style={styles.title}>Action Items</Text>
         </TouchableOpacity>
