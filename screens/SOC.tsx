@@ -37,13 +37,19 @@ export default function SOC() {
   const [isDepOpen, setDOpen] = useState(false);
 
   useEffect(() => {
+    let cancel = false;
     axios.get("https://one.uf.edu/apix/soc/filters").then((res) => {
+      if (cancel) return;
       console.log(res);
       setData(res.data);
       setLoading(false);
     }).catch((error) => {
       console.log(error);
     })
+
+    return () => { 
+      cancel = true;
+    }
   }, []);
 
   function search() {

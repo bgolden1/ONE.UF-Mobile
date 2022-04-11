@@ -156,24 +156,31 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
 
 
   useEffect(() => {
+    let cancel = false;
     const url = "http://34.136.6.158:5000/api/";
     const headers = {
       'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + '_',
       'X-Host-Choice': 'mock-host'
     }
     axios.get(url + "user", { headers: headers }).then((res) => {
+      if (cancel) return;
       setUser(res.data);
     }).catch((err) => {
       console.log(err);
     });
     axios.get(url + "current-schedule", { headers: headers }).then((res) => {
+      if (cancel) return;
       setSchedule(res.data);
       setLoading(false);
     }).catch((err) => {
       console.log(err);
     });
     
-  })
+
+    return () => { 
+      cancel = true;
+    }
+  }, [globalThis.person])
 
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :

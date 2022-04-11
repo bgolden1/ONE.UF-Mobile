@@ -41,43 +41,54 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
     })
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
+        let cancel = false;
         const url = "http://34.136.6.158:5000/api/";
         const headers = {
             'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + '_',
             'X-Host-Choice': 'mock-host'
         }
         axios.get(url + "accountbalance", { headers: headers }).then((res) => {
+            if (cancel) return;
             setAccountBalance(res.data.accountBalance);
         }).catch((err) => {
             console.log(err);
         })
         axios.get(url + "chargesdue", { headers: headers }).then((res) => {
+            if (cancel) return;
             setChargesDue(res.data);
         }).catch((err) => {
             console.log(err)
         })
         axios.get(url + "paymentlink", { headers: headers }).then((res) => {
+            if (cancel) return;
             setPaymentLink(res.data);
         }).catch((err) => {
             console.log(err)
         })
         axios.get(url + "accountactivities", { headers: headers }).then((res) => {
+            if (cancel) return;
             setActivities(res.data.activities);
         }).catch((err) => {
             console.log(err)
         })
         axios.get(url + "paymenthistory", { headers: headers }).then((res) => {
+            if (cancel) return;
             setHistory(res.data);
         }).catch((err) => {
             console.log(err)
         })
         axios.get(url + "user", {headers: headers}).then((res) => {
+            if (cancel) return;
             setUser(res.data);
             setLoading(false);
         }).catch((err) => {
             console.log(err)
         })
-    })
+
+        return () => { 
+            cancel = true;
+        }
+    }, [globalThis.person])
     return (
 
 

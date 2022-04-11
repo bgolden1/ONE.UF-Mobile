@@ -14,9 +14,11 @@ export default function Calendar({ navigation }: RootTabScreenProps<'Home'>) {
 
 
   useEffect(() => {
+    let cancel = false;
     const url = "http://34.136.6.158:5000/api/";
     axios.get(url + "calendar_21_22")
     .then((res)=> {
+      if (cancel) return;
       setEvents(res.data);
       setLoading(false)
       //console.log(res.data)
@@ -24,6 +26,10 @@ export default function Calendar({ navigation }: RootTabScreenProps<'Home'>) {
     .catch((error) => {
       console.log(error)
     })
+
+    return () => { 
+      cancel = true;
+    }
   }, [])
 
   let renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
