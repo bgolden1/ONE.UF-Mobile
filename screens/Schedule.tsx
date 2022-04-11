@@ -216,21 +216,20 @@ function DisplayDataFour(props: any) {
   }
   return (
       <TouchableOpacity onPress={() => press(!pressed)} style={styles.bsection}>
-          <Text style={[styles.body]}>{data.label}</Text>
           {pressed ?
             <View>
-            <><><Text style={styles.title}>{data.code} : {data.name}</Text>
-            </>
-            <DisplayDataTwo data={data} />
+              <Text style={styles.title}>{data.code} : {data.name}</Text>
+            
+              <DisplayDataTwo data={data} />
                                             
-            {data.meetTimes.map((object2: any, key2: any) => {
-            return ( 
-            <DisplayData data={object2} />
-            ); 
-            })}
+              {data.meetTimes.map((object2: any, key2: any) => {
+                return ( 
+                  <DisplayData data={object2} />
+                ); 
+              })}
               
-            <DisplayDataThree data={data} />
-            </>
+              <DisplayDataThree data={data} />
+            
             </View>
             :
             <Text style={styles.title}>{data.code} : {data.name}</Text>
@@ -249,18 +248,17 @@ function DisplayData(props: any) {
   }
   return (
       <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
-          <Text style={[styles.body]}>{data.label}</Text>
           {pressed ?
-              <View>
+            <View>
               <Text style={styles.boldbody}>Meet Day Information</Text>
               <Text style={styles.body}>Meet Days: {data.meetDays}
               {"\n"}Meet Time Begin: {data.meetTimeBegin}{"\n"}Meet Time End: {data.meetTimeEnd}
               {"\n"}Meet Building: {data.meetBuilding}{"\n"}Meet Building Code: {data.meetBldgCode}
               {"\n"}Meet Room: {data.meetRoom}</Text>
-              </View>
+            </View>
 
-                  :
-              <Text style={styles.boldbody}>Meet Day Information</Text>
+                :
+            <Text style={styles.boldbody}>Meet Day Information</Text>
           }
 
       </TouchableOpacity>
@@ -275,17 +273,16 @@ function DisplayDataTwo(props: any) {
   }
   return (
       <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
-          <Text style={[styles.body]}>{data.label}</Text>
           {pressed ?
-              <View>
+            <View>
               <Text style={styles.boldbody}>Class Information</Text>
               <Text style={styles.body}>Class Number: {data.classNumber}{"\n"}Course ID: {data.courseID}
               {"\n"}Note: {data.note}
               {"\n"}Department Code: {data.deptCode}{"\n"}Department Name: {data.deptName}{"\n"}Final Exam: {data.finalExam}
               {"\n"}Instructor(s): {data.instructors}</Text>
-              </View>
+            </View>
           :
-              <Text style={styles.boldbody}>Class Information</Text>
+            <Text style={styles.boldbody}>Class Information</Text>
           }
 
       </TouchableOpacity>
@@ -300,17 +297,16 @@ function DisplayDataThree(props: any) {
   }
   return (
       <TouchableOpacity onPress={() => press(!pressed)} style={styles.subsection}>
-          <Text style={[styles.body]}>{data.label}</Text>
           {pressed ?
               <View>
-              <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
-              <Text style={styles.body}>Droppable: {data.droppable}
-              {"\n"}Start Date: {data.startDate}
-              {"\n"}End Date: {data.endDate}{"\n"}Credits: {data.credits}{"\n"}Remark: {data.remark}
-              {"\n"}Past Deadline: {data.pastDeadline}{"\n"}Enrollment Status: {data.enrollmentStatus}
-              {"\n"}Grading Basis: {data.gradingBasisDescription}
-              {"\n"}Wait Position: {data.waitPosition}
-              {"\n"}Enroll From Wait: {data.enrollFromWait}</Text>
+                <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
+                <Text style={styles.body}>Droppable: {data.droppable}
+                {"\n"}Start Date: {data.startDate}
+                {"\n"}End Date: {data.endDate}{"\n"}Credits: {data.credits}{"\n"}Remark: {data.remark}
+                {"\n"}Past Deadline: {data.pastDeadline}{"\n"}Enrollment Status: {data.enrollmentStatus}
+                {"\n"}Grading Basis: {data.gradingBasisDescription}
+                {"\n"}Wait Position: {data.waitPosition}
+                {"\n"}Enroll From Wait: {data.enrollFromWait}</Text>
               </View>
               :
               <Text style={styles.boldbody}>Grading Info/ Enrollment Status</Text>
@@ -325,14 +321,14 @@ const styles = StyleSheet.create({
   personal_info: {
     justifyContent: "flex-start",
     alignItems: "center",
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#a6a6a6",
     borderRadius: 6,
     width: '80%',
     padding: 10
   },
   title: {
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: 'bold',
     alignSelf: 'center'
   },
@@ -349,8 +345,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   boldbody: {
-    textAlign: 'justify',
-    fontSize: 17,
+    textAlign: 'center',
+    fontSize: 19,
     fontWeight: 'bold'
   },
   asection: {
@@ -373,9 +369,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     marginTop: 10,
-    marginBottom: 10,
-    padding: 5,
-    paddingBottom: 15,
+    marginBottom: 6,
+    padding: 10
   },
   section: {
     alignSelf: 'center',
@@ -385,9 +380,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     marginBottom: 10,
-    padding: 5,
     paddingBottom: 15,
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 10
   },
   bsection: {
     alignSelf: 'center',
@@ -395,7 +390,10 @@ const styles = StyleSheet.create({
     borderColor: '#a6a6a6',
     borderWidth: 1,
     borderRadius: 6,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    marginBottom: 30,
+    paddingTop: 10,
+    paddingBottom: 16
   },
   button: {
     marginTop: 40

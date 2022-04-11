@@ -141,11 +141,11 @@ const styles = StyleSheet.create({
     course: {
         alignSelf: 'center',
         width: 350,
-        borderColor: '#285697',
-        borderWidth: 2,
-        borderRadius: 15,
-        marginBottom: 10,
-        padding: 5
+        borderColor: 'grey',
+        borderWidth: 1,
+        borderRadius: 6,
+        marginBottom: 15,
+        padding: 10
     },
     section: {
         alignSelf: 'center',
