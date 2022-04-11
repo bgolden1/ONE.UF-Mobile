@@ -96,8 +96,7 @@ function BottomTabNavigator() {
             <TouchableOpacity onPress={() => navigation.navigate("ChooseUser")}>
                 <FontAwesome name='info-circle' size={25} style={{marginRight: 15}}/>
             </TouchableOpacity>
-          ),
-          tabBarShowLabel: false
+          )
         })}
       />
       <BottomTab.Screen
