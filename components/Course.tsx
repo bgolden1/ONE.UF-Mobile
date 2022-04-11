@@ -87,7 +87,7 @@ function Instructor_eval(props: any) {
             setColor("green");
         }
         else if (tempScore >= 7) {
-            setColor("#ffd500");
+            setColor("#b5a91f");
         }
         else if (tempScore == -1) {
             setColor("black");
@@ -107,7 +107,7 @@ function Instructor_eval(props: any) {
                 setColor("green");
             }
             else if (tempScore >= 7) {
-                setColor("#ffd500");
+                setColor("#b5a91f");
             }
             else if (tempScore == -1) {
                 setColor("black");
@@ -120,7 +120,7 @@ function Instructor_eval(props: any) {
     }
 
     return (
-        isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> : <Text style={[styles.body, { color: color }]}>{instructor}: {score}</Text>
+        isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> : <Text style={[styles.body, { color: color }]}>{instructor}{!(score > 0) ? "" : ": " + score}</Text>
     )
 }
 
