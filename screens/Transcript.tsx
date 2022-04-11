@@ -64,7 +64,7 @@ export default function Transcript() {
         }
     });
     return (
-        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{ marginTop: "65%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
             <ScrollView>
                 <View style={{ alignItems: "center", flex: 1, backgroundColor: '#eaeaea'}}>
                     <View style={styles.personal_info}>

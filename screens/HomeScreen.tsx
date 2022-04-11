@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ActivityIndicator, Button, LogBox } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import { useIsFocused } from '@react-navigation/native'
 
 import axios from 'axios';
 
@@ -14,6 +15,7 @@ globalThis.person = 'CHARLES'
 
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
+  const isFocused = useIsFocused();
   
   const [grades, setGrades] = useState(
     {
@@ -41,6 +43,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   
   useEffect(() => {
     let cancel = false;
+    setLoading(true);
     const url = "http://34.136.6.158:5000/api/grades"
     const headers = {
         'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + "_",
@@ -57,10 +60,10 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
     return () => { 
       cancel = true;
     }
-  });
+  }, [isFocused]);
 
   return (
-    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+    isLoading ? <View style={{ marginTop: "80%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
       
         <View style={styles.container}>
           <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>

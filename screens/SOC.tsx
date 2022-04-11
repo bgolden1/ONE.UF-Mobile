@@ -83,7 +83,7 @@ export default function SOC() {
           <Text style={[styles.title, { alignSelf: 'center' }]}>No results found</Text>
         </View>
       </View> :
-        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{  alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#eaeaea'}} /></View> :
           <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             {isSearching ?
               <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>

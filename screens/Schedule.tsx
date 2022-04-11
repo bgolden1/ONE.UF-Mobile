@@ -8,8 +8,8 @@ import { useIsFocused } from '@react-navigation/native';
 import { Text, View, useThemeColor } from '../components/Themed';
 
 export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
-  const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
   const isFocused = useIsFocused();
+  const color = useThemeColor({ light: 'black', dark: 'white' }, 'text');
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({
     name: "",
@@ -159,6 +159,7 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
 
   useEffect(() => {
     let cancel = false;
+    setLoading(true);
     const url = "http://34.136.6.158:5000/api/";
     const headers = {
       'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + '_',
@@ -167,16 +168,18 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
     axios.get(url + "user", { headers: headers }).then((res) => {
       if (cancel) return;
       setUser(res.data);
+
+      axios.get(url + "current-schedule", { headers: headers }).then((res) => {
+        if (cancel) return;
+        setSchedule(res.data);
+        setLoading(false);
+      }).catch((err) => {
+        console.log(err);
+      });
     }).catch((err) => {
       console.log(err);
     });
-    axios.get(url + "current-schedule", { headers: headers }).then((res) => {
-      if (cancel) return;
-      setSchedule(res.data);
-      setLoading(false);
-    }).catch((err) => {
-      console.log(err);
-    });
+    
     
 
     return () => { 
@@ -185,7 +188,7 @@ export default function Schedule({ navigation }: RootTabScreenProps<'Home'>) {
   }, [isFocused])
 
   return (
-    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+    isLoading ? <View style={{ marginTop: "80%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
       <ScrollView >
 
         <View style={{ alignItems: "center", flex: 1, paddingTop: 60, paddingBottom: 60, backgroundColor: '#eaeaea' }}>

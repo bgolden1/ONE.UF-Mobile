@@ -46,24 +46,14 @@ export default function Calendar({ navigation }: RootTabScreenProps<'Home'>) {
     );
   }
 
-  let renderEmptyDate = () => {
-    return (
-      <View style={styles.emptyDate}>
-        <Text>This is empty date!</Text>
-      </View>
-    );
-  }
-
 
   return (
-    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+    isLoading ? <View style={{ marginTop: "65%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
     <View style={{ alignItems: "center", flex: 1 }}>
       <Agenda
         items={myEvents}
         style={styles.calendar}
         renderItem={renderItem}
-        // Specify how empty date content with no items should be rendered
-        renderEmptyDate={renderEmptyDate}
       />
       
     </View>

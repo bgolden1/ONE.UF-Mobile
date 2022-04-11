@@ -48,7 +48,7 @@ export default function ActionItems() {
     }, []);
 
     return (
-        isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
+        isLoading ? <View style={{ marginTop: "65%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
             <ScrollView>
                 <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#eaeaea'}}>
                     <Text style={styles.title}>{"\n"}Holds:</Text>
