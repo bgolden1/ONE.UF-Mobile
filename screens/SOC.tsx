@@ -78,8 +78,10 @@ export default function SOC() {
   return (
     <View style={styles.container}>
       {failed ? <View style={{ position: 'absolute', left: 0, top: 0 }}>
-        <Button title="<Return to Search" onPress={returnToSearch} />
-        <Text style={[styles.title, { alignSelf: 'center' }]}>No results found</Text>
+        <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+          <Button title="<Return to Search" onPress={returnToSearch} />
+          <Text style={[styles.title, { alignSelf: 'center' }]}>No results found</Text>
+        </View>
       </View> :
         isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
           <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -114,7 +116,9 @@ export default function SOC() {
                   <Text style={styles.title}>Instructor Last Name:</Text>
                   <TextInput style={[styles.input, {color}]} onChangeText={setInstructor} value={instructor} />
                 </View>
-                <Button title='Search' onPress={search} />
+                <View style={{marginBottom: 40}}>
+                  <Button title='Search' onPress={search} />
+                </View>
 
               </ScrollView> :
               <View style={styles.container}>
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#eaeaea'
   },
   title: {
     textAlign: 'center',
@@ -150,8 +155,10 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 1,
+    borderRadius: 6,
     padding: 10,
-    minWidth: '90%'
+    minWidth: '90%',
+    backgroundColor: '#fff'
   },
   scrollView: {
     alignSelf: 'center',
@@ -159,6 +166,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   }
 });
