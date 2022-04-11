@@ -77,14 +77,14 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
           </View>
           {isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> :
           <View style={styles.preview}>
-            <Text> {grades.termDesc} </Text>
+            <Text style={{fontSize: 20, fontWeight: '400'}}> {grades.termDesc} </Text>
             <View style={{ flexDirection: 'row' }}>
-              <Text style={{ flex: 3 }}> Cumulative UF GPA: </Text>
-              <Text style={{ flex: 1 }}>{grades.cumGpa} </Text>
+              <Text style={[styles.previewText, { flex: 3 }]}> Cumulative UF GPA: </Text>
+              <Text style={[styles.previewText, { flex: 1 }]}>{grades.cumGpa} </Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-              <Text style={{ flex: 3 }}> Term GPA: </Text>
-              <Text style={{ flex: 1 }}>{grades.termGpa} </Text>
+              <Text style={[styles.previewText, { flex: 3 }]}> Term GPA: </Text>
+              <Text style={[styles.previewText, { flex: 1 }]}>{grades.termGpa} </Text>
             </View>
 
           </View>
