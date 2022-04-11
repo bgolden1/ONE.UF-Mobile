@@ -44,6 +44,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 
 
   useEffect(() => {
+    setLoading(true);
     const url = "http://34.136.6.158:5000/api/"
     const headers = {
       'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + "_",
@@ -51,23 +52,22 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
     }
     axios.get(url + "grades", { headers: headers }).then((res) => {
       setGrades(res.data.terms[0]);
+
+      axios.get(url + "user", { headers: headers }).then((res) => {
+        setUser(res.data);
+        setLoading(false);
+      }).catch((err) => {
+        console.log(err);
+      });
     }).catch((err) => {
       console.log(err);
     });
 
-    axios.get(url + "user", { headers: headers }).then((res) => {
-      setUser(res.data);
-      setLoading(false);
-    }).catch((err) => {
-      console.log(err);
-    });
-  }, []);
+  }, [isFocused]);
 
   return (
-    isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
-
       <View style={styles.container}>
-        <Text style={{fontSize: 30, top: 100, textAlign: 'center', fontFamily: "Times New Roman", marginBottom: 30}}>Welcome, {"\n"}{user.name}</Text>
+        <Text style={{fontSize: 30, top: 100, textAlign: 'center', fontFamily: "Times New Roman", marginBottom: 30}}>Welcome, {"\n"}{isLoading ?  <ActivityIndicator size={'large'} color={'blue'} /> : user.name}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>
           <Text style={styles.title}>Action Items</Text>
         </TouchableOpacity>
@@ -75,6 +75,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
           <View>
             <Text style={styles.title}>Unofficial Transcript</Text>
           </View>
+          {isLoading ? <ActivityIndicator size={'large'} color={'blue'} /> :
           <View style={styles.preview}>
             <Text> {grades.termDesc} </Text>
             <View style={{ flexDirection: 'row' }}>
@@ -87,6 +88,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
             </View>
 
           </View>
+          }
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Calendar")} style={styles.box}>
           <View>
