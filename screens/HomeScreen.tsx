@@ -63,8 +63,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   }, [isFocused]);
 
   return (
-    isLoading ? <View style={{ marginTop: "80%", alignSelf: 'center', alignContent: 'center', alignItems: 'center'}}><ActivityIndicator size={'large'} color={'blue'} style={{backgroundColor: '#f2f2f2'}} /></View> :
-      
+
         <View style={styles.container}>
           <TouchableOpacity onPress={() => navigation.navigate("ActionItems")} style={styles.box}>
             <Text style={styles.title}>Action Items</Text>
@@ -73,6 +72,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
             <View>
               <Text style={styles.title}>Unofficial Transcript</Text>
             </View>
+            {isLoading ? <ActivityIndicator size={'large'} color={'blue'} style={{marginTop: 10}} /> : 
             <View style={styles.preview}>
               <Text> {grades.terms[0].termDesc} </Text>
               <View style={{flexDirection: 'row'}}>
@@ -95,7 +95,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
                 })}
               </View> */}
 
-            </View>
+            </View>}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Calendar")} style={styles.box}>
             <View>

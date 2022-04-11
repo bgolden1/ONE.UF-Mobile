@@ -50,53 +50,44 @@ export default function Finances({ navigation }: RootTabScreenProps<'Home'>) {
             'X-UF-Cookie': '_shibsession_68747470733a2f2f73712e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f68747470733a2f2f73702e6c6f67696e2e75666c2e6564752f75726e3a6564753a75666c3a70726f643a30303734312f=_' + globalThis.person + '_',
             'X-Host-Choice': 'mock-host'
         }
-        axios.get(url + "accountbalance", { headers: headers }).then((res) => {
+        let accountBalanceReq = axios.get(url + "accountbalance", { headers: headers });
+        let chargesDueReq = axios.get(url + "chargesdue", { headers: headers });
+        let paymentLinkReq = axios.get(url + "paymentlink", { headers: headers });
+        let accountActivitiesReq = axios.get(url + "accountactivities", { headers: headers });
+        let paymentHistoryReq = axios.get(url + "paymenthistory", { headers: headers });
+        let userReq = axios.get(url + "user", {headers: headers});
+
+        axios.all([accountBalanceReq, chargesDueReq, paymentLinkReq, accountActivitiesReq, paymentHistoryReq, userReq])
+        .then(axios.spread((...responses) => {
+            let accountBalanceRes = responses[0];
             if (cancel) return;
-            setAccountBalance(res.data.accountBalance);
+            setAccountBalance(accountBalanceRes.data.accountBalance);
 
-            axios.get(url + "chargesdue", { headers: headers }).then((res) => {
-                if (cancel) return;
-                setChargesDue(res.data);
+            let chargesDueRes = responses[1];
+            if (cancel) return;
+            setChargesDue(chargesDueRes.data);
 
-                axios.get(url + "paymentlink", { headers: headers }).then((res) => {
-                    if (cancel) return;
-                    setPaymentLink(res.data);
+            let paymentLinkRes = responses[2];
+            if (cancel) return;
+            setPaymentLink(paymentLinkRes.data);
 
-                    axios.get(url + "accountactivities", { headers: headers }).then((res) => {
-                        if (cancel) return;
-                        setActivities(res.data.activities);
+            let accountActivitiesRes = responses[3];
+            if (cancel) return;
+            setActivities(accountActivitiesRes.data.activities);
 
-                        axios.get(url + "paymenthistory", { headers: headers }).then((res) => {
-                            if (cancel) return;
-                            setHistory(res.data);
+            let paymentHistoryRes = responses[4];
+            if (cancel) return;
+            setHistory(paymentHistoryRes.data);
 
-                            axios.get(url + "user", {headers: headers}).then((res) => {
-                                if (cancel) return;
-                                setUser(res.data);
-                                setLoading(false);
-                            }).catch((err) => {
-                                console.log(err)
-                            })
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-                        
-                    }).catch((err) => {
-                        console.log(err)
-                    })
-                    
-                }).catch((err) => {
-                    console.log(err)
-                })
-                
-            }).catch((err) => {
-                console.log(err)
-            })
-            
-        }).catch((err) => {
-            console.log(err);
+            let userRes = responses[5];
+            if (cancel) return;
+            setUser(userRes.data);
+
+            setLoading(false);
+        }))
+        .catch((err) => {
+            console.log(err)
         })
-        
 
         return () => { 
             cancel = true;
