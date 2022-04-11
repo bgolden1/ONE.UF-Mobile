@@ -74,14 +74,14 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
             </View>
             {isLoading ? <ActivityIndicator size={'large'} color={'blue'} style={{marginTop: 10}} /> : 
             <View style={styles.preview}>
-              <Text> {grades.terms[0].termDesc} </Text>
+              <Text style={{fontSize: 20, fontWeight: '400'}}> {grades.terms[0].termDesc} </Text>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 3}}> Cumulative UF GPA: </Text>
-                <Text style={{flex: 1}}>{grades.terms[0].cumGpa} </Text>
+                <Text style={[styles.previewText, {flex: 3}]}> Cumulative UF GPA: </Text>
+                <Text style={[styles.previewText, {flex: 1}]}>{grades.terms[0].cumGpa} </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 3}}> Term GPA: </Text>
-                <Text style={{flex: 1}}>{grades.terms[0].termGpa} </Text>
+                <Text style={[styles.previewText, {flex: 3}]}> Term GPA: </Text>
+                <Text style={[styles.previewText, {flex: 1}]}>{grades.terms[0].termGpa} </Text>
               </View>
 
               {/* <View style={styles.classes}>
@@ -149,9 +149,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   preview: {
-    marginTop: 8,
-    borderWidth: 1,
-    width: '60%'
+    marginTop: 10,
+    borderWidth: 2,
+    width: '70%',
+    borderRadius: 6,
+    borderColor: 'grey',
+    padding: 5,
+    backgroundColor: '#f0f0f0'
   },
   class_text: {
     textAlign: 'left',
@@ -168,6 +172,12 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 5,
     backgroundColor: '#fff'
+  },
+  previewText: {
+    flex: 3,
+    fontSize: 16,
+    fontWeight: '200',
+    backgroundColor: '#f0f0f0'
   }
 
 });
