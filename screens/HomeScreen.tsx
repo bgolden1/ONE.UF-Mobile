@@ -61,7 +61,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
     }).catch((err) => {
       console.log(err);
     });
-  }, []);
+  }, [globalThis.person]);
 
   return (
     isLoading ? <View style={{ alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}><ActivityIndicator size={'large'} color={'blue'} /></View> :
